@@ -1,0 +1,19 @@
+@media (min-width: 1180px){
+  /*Homepage*/
+  .statistics{
+    &__graphs{
+      width: 55%;
+    }
+    &__numbers{
+      flex-direction: row;
+      width: 43%;
+    }
+    &__item{
+      width: 48%;
+    }
+    &__uptime{
+      margin-bottom: 0;
+    }
+  }
+  /*Homepage END*/
+}

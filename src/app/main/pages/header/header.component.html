@@ -1,0 +1,51 @@
+<div class="header">
+  <div class="header__top">
+    <div class="wrapper">
+      <div class="header__personal">
+        <a [routerLink]="['/login']" class="header__lk">
+          <img src="../../../../assets/images/personal.svg" alt=""/>
+        </a>
+        <a [routerLink]="['/registration']" class="header__sign">
+          Sign-up
+        </a>
+        <a [routerLink]="['/login']" class="header__login">
+          Login
+        </a>
+      </div>
+      <div class="header__personal-mobile">
+        <a [routerLink]="['/login']"><img src="../../../../assets/images/personal.svg" alt=""/></a>
+      </div>
+    </div>
+  </div>
+  <div class="header__main">
+    <div class="wrapper">
+      <div class="header__logo">
+        <img src="../../../../assets/images/logo.svg" alt=""/>
+      </div>
+      <div class="header__nav">
+        <div class="header__links">
+          <a [routerLink]="['/faq']">FAQ</a>
+          <a [routerLink]="['/about']">About</a>
+          <a [routerLink]="['/support']">Support</a>
+          <a [routerLink]="['/blog']">Blog</a>
+        </div>
+        <div class="header__socials">
+          <a href="https://facebook.com"><img src="../../../../assets/images/facebook.png" alt=""/></a>
+          <a href="https://twitter.com"><img src="../../../../assets/images/twitter.png" alt=""/></a>
+          <a href=""><img src="../../../../assets/images/message.png" alt=""/></a>
+        </div>
+      </div>
+      <div style="display: none" class="header__nav-mobile">
+        <a [routerLink]="['/faq']">FAQ</a>
+        <a [routerLink]="['/about']">About</a>
+        <a [routerLink]="['/support']">Support</a>
+        <a [routerLink]="['/blog']">Blog</a>
+        <a [routerLink]="['/registration']">Sign-up</a>
+        <a [routerLink]="['/login']">Login</a>
+      </div>
+      <div class="header__burger inactive">
+        <span></span>
+      </div>
+    </div>
+  </div>
+</div>

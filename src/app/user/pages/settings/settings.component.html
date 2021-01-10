@@ -1,0 +1,129 @@
+<div class="account__heading heading-dashboard">
+  <h2>My Settings</h2>
+  <p>A place to find all the details about your monitors</p>
+</div>
+<div class="account__settings settings">
+  <div class="settings__item">
+    <div class="settings__top">
+      <h2><img src="img/contacts.png" alt=""/> Account profile</h2>
+    </div>
+    <div class="settings__plan">
+      <h3>Plan</h3>
+      <button class="button settings__button modal-upgrade-show">Upgrade to Pro</button>
+      <p class="settings__dotted">You are using the <b>"Free Plan (50 monitors, 5 minute intervals)"</b>.</p>
+    </div>
+    <div class="settings__history">
+      <p class="settings__dotted">
+        <span>Payments history</span>
+        The auto-renew billing is cancelled. Please click the "Change Plan button" above to renew the subscription
+      </p>
+    </div>
+    <div class="form settings__personal">
+      <h3>Personal</h3>
+      <form>
+        <div class="settings__personal-field">
+          <p>First-Last Name <sup>*</sup></p>
+          <input type="text" placeholder="User"/>
+        </div>
+        <div class="settings__personal-field">
+          <p>Timezone</p>
+          <div class="select settings__select">
+            <img src="img/down.svg" alt="">
+            <select>
+              <option value="0">Sao Paulo (GMT -03:00:00)</option>
+              <option value="1">Sao Paulo (GMT -03:00:00)</option>
+              <option value="2">Sao Paulo (GMT -03:00:00)</option>
+              <option value="3">Sao Paulo (GMT -03:00:00)</option>
+            </select>
+          </div>
+        </div>
+        <label class="form__checkbox settings__checkbox">
+          <input checked type="checkbox" name="type">
+          <span></span>
+          <p>Inform me about new features and updates (no more than twice a month).</p>
+        </label>
+        <label class="form__checkbox settings__checkbox">
+          <input checked type="checkbox" name="type">
+          <span></span>
+          <p>Inform me about development/technical updates (API, IPs used..).</p>
+        </label>
+        <p class="settings__note">Note: important updates that can effect your usage of the service will still be
+          delivered.</p>
+        <div class="settings__submit">
+          <button class="button settings__button">Upgrade</button>
+        </div>
+      </form>
+    </div>
+    <div class="form settings__password">
+      <h3>Password <span>(not required if you won't be updating the password)</span></h3>
+      <form>
+        <div class="settings__password-field">
+          <p>Current Password <sup>*</sup></p>
+          <input type="text"/>
+        </div>
+        <div class="settings__password-field">
+          <p>New Password <sup>*</sup></p>
+          <input type="text"/>
+        </div>
+        <div class="settings__password-field">
+          <p>Repeat New Password <sup>*</sup></p>
+          <input type="text"/>
+        </div>
+        <div class="settings__submit">
+          <button class="button settings__button">Upgrade</button>
+        </div>
+      </form>
+    </div>
+    <div class="settings__text">
+      <h3>E-mail</h3>
+      <p class="settings__dotted">
+        Your e-mail at Uptime Robot is user12343@gmail.com. <a href="">I want to change it.</a>
+      </p>
+    </div>
+    <div class="settings__text">
+      <h3>Delete Account</h3>
+      <p class="settings__dotted">
+        Uptime Robot sends an "account deletion verification e-mail" to the account e-mail. Once the verification link
+        inside the e-mail is clicked, all account information at Uptime Robot (including the account, monitors, logs and
+        settings will be lost and can not be recovered).
+        <a href="">I still want to delete the account.</a>
+      </p>
+    </div>
+  </div>
+  <div class="settings__item">
+    <div class="settings__top">
+      <h2><img src="img/alert.png" alt=""/> Alert Contacts</h2>
+      <button class="button settings__button modal-alert-show">Add Alert Contact</button>
+    </div>
+    <div class="settings__alert">
+      <h3>here are 1 alert contacts ( hide them).</h3>
+      <div class="settings__table">
+        <div class="settings__top-row">
+          <div class="settings__left">
+            <p class="settings__type">Type</p>
+            <p class="settings__contact">Alert Contact</p>
+          </div>
+          <div class="settings__right">
+            <p class="settings__action">Action</p>
+          </div>
+        </div>
+        <div class="settings__row">
+          <div class="settings__left">
+            <p class="settings__type"><img alt="" src="img/mail.png"/></p>
+            <p class="settings__contact">user1234@gmail.com</p>
+          </div>
+          <div class="settings__right">
+            <p class="settings__action">
+              <button class="settings__edit">
+                <img alt="" src="img/pen-blue.png"/>
+              </button>
+              <button class="settings__pause">
+                <img alt="" src="img/pause.png"/>
+              </button>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
