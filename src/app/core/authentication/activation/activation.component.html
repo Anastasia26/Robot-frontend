@@ -1,0 +1,2 @@
+<h2 *ngIf="errorMessage; else elseBlock" style="color: #FF4848">{{errorMessage.detail}}</h2>
+<ng-template #elseBlock><h2 style="color: #ffffff">You have successfully activated your account. Please Login</h2></ng-template>

@@ -5,7 +5,12 @@ import {Component, OnInit} from '@angular/core';
   selector: 'app-home',
   template: `
       <div class="dashboard">
-          <app-header></app-header>
+        <div class="personal">
+          <div class="header">
+            <app-topline></app-topline>
+            <app-header></app-header>
+          </div>
+        </div>
           <div class="account">
               <div class="wrapper">
                   <div class="account__left">

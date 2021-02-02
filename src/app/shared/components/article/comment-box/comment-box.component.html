@@ -1,0 +1,19 @@
+<div class="form replies__form">
+<h2>{{headertext}}</h2>
+<form [formGroup]="formComments" (ngSubmit)="sendComment()">
+  <div class="form__field">
+    <label>Comment</label>
+    <textarea formControlName="comment"></textarea>
+    <sup *ngIf="formComments.get('comment').invalid && formComments.get('comment').touched">
+      <span *ngIf="formComments.get('comment')['errors']['required']">The text is required!</span>
+    </sup>
+  </div>
+  <div class="form__buttons">
+    <button class="button" type="submit" [disabled]="formComments.invalid">Post comment</button>
+    <button class="button button-cancel" *ngIf="showBtnCancel">Cancel reply</button>
+  </div>
+  <div class="form__warning">
+    <p><img src="../../../../../assets/images/warning.png" alt=""/> Only auto-cut users can leave comments</p>
+  </div>
+</form>
+</div>
