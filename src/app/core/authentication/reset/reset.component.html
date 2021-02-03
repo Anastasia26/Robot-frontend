@@ -1,21 +1,44 @@
+<div class="top">
+  <div class="wrapper">
+    <h1>Registration</h1>
+    <p>It takes just 30 seconds. Go ahead!</p>
+  </div>
+</div>
 <div class="registration registration-reset">
   <div class="wrapper">
     <div class="form registration__form">
       <h2>Password reset</h2>
-      <form>
+      <form [formGroup]="form" (ngSubmit)="submitPasswordReset()">
         <div class="form__field">
-          <label><b>Enter a new password</b></label>
-          <input placeholder="New password" type="text">
+          <div class="form__field" [ngClass]="{'has-error': form.get('password').invalid && form.get('password').touched}">
+            <label><b>Enter a new password</b> <span>min. 6 characters</span></label>
+            <input placeholder="New password" type="password" formControlName="password" name="password">
+            <sup *ngIf="form.get('password').invalid && form.get('password').touched">
+              <span *ngIf="form.get('password')['errors']['required']">Password is required!</span>
+              <span *ngIf="form.get('password')['errors']['minlength'] && form.get('password')['errors']['minlength']['requiredLength']">
+              The password must be more than {{form.get('password')['errors']['minlength']['requiredLength']}}
+                characters! Now {{form.get('password')['errors']['minlength']['actualLength']}}</span>
+            </sup>
+          </div>
         </div>
         <div class="form__field">
-          <label><b>Retype the new password</b></label>
-          <input placeholder="Confirm Password" type="text">
+          <div class="form__field" [ngClass]="{'has-error': form.get('confirmPass').invalid && form.get('confirmPass').touched}">
+            <label><b>Retype the new password</b></label>
+            <input placeholder="Confirm Password" type="password" formControlName="confirmPass" name="confirmPass">
+            <sup *ngIf="form.get('confirmPass').invalid && form.get('confirmPass').touched">
+              <span *ngIf="form.get('confirmPass')['errors']['required']">Confirm Password is required!</span>
+              <span *ngIf="form.get('confirmPass')['errors']['mustMatch']">Passwords must match</span>
+            </sup>
+          </div>
         </div>
         <div class="form__buttons">
-          <button type="button" class="button modal__show">Save</button>
+          <button type="submit" class="button modal__show" [disabled]="form.invalid">Save</button>
         </div>
       </form>
     </div>
-    <a href="" class="registration__already">Already have an account?</a>
+    <a [routerLink]="['/login']" class="registration__already">Already have an account?</a>
   </div>
+  <app-modals [id]="modalID" [mode]="'confirm'" [bodytext]="'Your password has been successfully changed. Now log in.'" [headertext]="'Reset password'"
+              (closeModalEvent)="closeResetPassword()">
+  </app-modals>
 </div>

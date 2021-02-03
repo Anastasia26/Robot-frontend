@@ -24,6 +24,11 @@
 .button:hover{
   background: linear-gradient(180deg, #4457BC 0%, #42519F 100%);
 }
+.button:disabled{
+  background: #8286bc;
+  opacity: .65;
+  cursor: auto;
+}
 .wrapper{
   width: 100%;
   max-width: 1630px;
@@ -702,6 +707,11 @@ h2{
       align-items: center;
       flex-direction: column;
     }
+    a {
+      text-decoration: none;
+      color: #FFFFFF;
+      margin-left: 5px;
+    }
   }
   &__item:nth-child(even){
     background: #333;
@@ -889,7 +899,7 @@ h2{
 /*Replies*/
 .replies{
   padding-top: 40px;
-  padding-bottom: 20px;
+  //padding-bottom: 20px;
   h2{
     margin: 0 0 11px;
     font-style: normal;
@@ -981,6 +991,26 @@ h2{
   }
 }
 /*Replies END*/
+
+/*Pagination*/
+.pagination {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 80px;
+  .ngx-pagination {
+    .current {
+      padding: 0.1875rem 0.625rem;
+      background: #6273CD;
+      color: #fefefe;
+      cursor: default;
+    }
+    a, button {
+      color: #939393;
+    }
+  }
+}
+/*Pagination END*/
+
 /*Form*/
 .form{
   h2{
@@ -995,6 +1025,7 @@ h2{
     text-align: left;
   }
   sup{
+    font-size: 18px;
     color: #FF4848;
   }
   label{
@@ -1296,7 +1327,6 @@ h2{
 
 /*Modal*/
 .modal{
-  display: none;
   position: fixed;
   width: 100%;
   height: 100%;
@@ -1314,6 +1344,7 @@ h2{
     z-index: 10;
   }
 }
+
 .modal-confirm{
   &__body{
     width: 100%;

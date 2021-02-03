@@ -1,0 +1,21 @@
+  <ng-container *ngIf="comment">
+   <div class="replies__content replies">
+		<div class="replies__item">
+			<div class="replies__top">
+				<div class="replies__avatar">
+					<img src="{{comment.commentator['avatar']}}" alt=""/>
+				</div>
+				<div class="replies__info">
+					<p class="replies__name">{{comment.commentator['full_name']}}</p>
+					<p class="replies__date">{{comment['created'] | date:'medium'}}</p>
+				</div>
+			</div>
+			<div class="replies__text">
+				<p>{{comment['text']}}</p>
+				<a class="button replies__button" (click)="replyClick(comment['id'])">REPLY</a>
+			</div>
+		</div>
+		<app-comment-box (submitForm)="onAdd($event)" *ngIf="isEditing"></app-comment-box>
+		<app-comment *ngFor="let c of comment.comments" [comment]="c"></app-comment>
+	</div>
+  </ng-container>

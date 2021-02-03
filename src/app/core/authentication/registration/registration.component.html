@@ -1,31 +1,71 @@
+<div class="top">
+  <div class="wrapper">
+    <h1>Registration</h1>
+    <p>It takes just 30 seconds. Go ahead!</p>
+  </div>
+</div>
 <div class="registration">
   <div class="wrapper">
     <div class="form registration__form">
       <h2>Create your account</h2>
-      <form>
+      <form [formGroup]="form" (ngSubmit)="submitRegisterForm()">
         <div class="form__field">
           <label><b>Your full name</b></label>
-          <input type="text">
+          <input type="text" formControlName="name" name="name">
+          <sup *ngIf="form.get('name').invalid && form.get('name').touched">
+            <span *ngIf="form.get('email')['errors']['required']">The name is required!</span>
+            <span *ngIf="form.get('name')['errors']['minlength'] && form.get('name')['errors']['minlength']['requiredLength']">
+              The name must be longer than {{form.get('name')['errors']['minlength']['requiredLength']}}
+              characters! Now {{form.get('name')['errors']['minlength']['actualLength']}}</span>
+          </sup>
+          <sup *ngIf="errorMessage">
+            <span *ngIf="errorMessage['full_name']">{{errorMessage['full_name']}}</span>
+          </sup>
         </div>
-        <div class="form__field">
+        <div class="form__field" [ngClass]="{'has-error': form.get('email').invalid && form.get('email').touched}">
           <label><b>Your e-mail</b></label>
-          <input type="text">
+          <input type="text" formControlName="email" name="email">
+          <sup *ngIf="form.get('email').invalid && form.get('email').touched">
+            <span *ngIf="form.get('email')['errors']['required']">Email is required!</span>
+            <span *ngIf="form.get('email')['errors']['email']">Please enter a valid email</span>
+          </sup>
+          <sup *ngIf="errorMessage">
+           <span *ngIf="errorMessage['email']">{{errorMessage['email']}}</span>
+          </sup>
         </div>
-        <div class="form__field">
-          <label><b>Enter your password</b> <span>min. 6 characters</span></label>
-          <input type="password">
+        <div class="form__field" [ngClass]="{'has-error': form.get('password').invalid && form.get('password').touched}">
+          <label><b>Enter your password</b><span> min. 6 characters</span></label>
+          <input type="password" formControlName="password" name="password">
+          <sup *ngIf="form.get('password').invalid && form.get('password').touched">
+            <span *ngIf="form.get('password')['errors']['required']">Password is required!</span>
+            <span *ngIf="form.get('password')['errors']['minlength'] && form.get('password')['errors']['minlength']['requiredLength']">
+              The password must be more than {{form.get('password')['errors']['minlength']['requiredLength']}}
+              characters! Now {{form.get('password')['errors']['minlength']['actualLength']}}</span>
+          </sup>
+          <sup *ngIf="errorMessage">
+            <span *ngIf="errorMessage['password']">{{errorMessage['password']}}</span>
+          </sup>
         </div>
-        <label  class="form__checkbox">
-          <input checked type="checkbox" name="type">
+        <label class="form__checkbox" [ngClass]="{'has-error': form.get('accept').invalid && form.get('accept').touched}">
+          <input type="checkbox" formControlName="accept" name="accept">
           <span></span> <p>I accept the <a href="">privacy policy terms and conditions</a></p>
+          <sup *ngIf="form.get('accept').invalid && form.get('accept').touched">
+            <sup *ngIf="form.get('accept')['errors']">Please accept privacy policy terms and conditions</sup>
+          </sup>
         </label>
         <div class="form__captcha">
-          <img src="img/captcha.jpg" alt=""/>
+          <re-captcha formControlName="recaptcha" siteKey="YOUR_SITE_KEY"></re-captcha>
+<!--          <sup *ngIf="form.get('recaptcha').invalid && form.get('recaptcha').touched">-->
+<!--            <span *ngIf="form.get('recaptcha')['errors']['required']">The recaptcha is required!</span>-->
+<!--          </sup>-->
         </div>
         <div class="form__buttons">
-          <button type="button" class="button modal__show">Register now</button>
+          <button class="button modal__show" type="submit" [disabled]="form.invalid">Register now</button>
         </div>
       </form>
     </div>
   </div>
+  <app-modals [id]="'registerFinish'" [mode]="'confirm'" [bodytext]="'Registration confirmation letter has been sent to your email'" [headertext]="'Confirm registration'"
+              (closeModalEvent)="closeRegisterForm()">
+  </app-modals>
 </div>

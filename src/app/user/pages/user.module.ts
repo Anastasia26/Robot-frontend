@@ -10,6 +10,7 @@ import { UserDashboardComponent } from './user-dashboard/user-dashboard.componen
 import { DeleteComponent } from './delete/delete.component';
 import { SettingsComponent } from './settings/settings.component';
 import { SearchSidebarComponent } from './search-sidebar/search-sidebar.component';
+import {SharedModule} from '../../shared/shared.module';
 
 
 
@@ -25,6 +26,7 @@ import { SearchSidebarComponent } from './search-sidebar/search-sidebar.componen
   ],
   imports: [
     CommonModule,
+    SharedModule,
     CoreModule,
     RouterModule,
     UserRoutingModule

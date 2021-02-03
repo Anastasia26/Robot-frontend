@@ -13,6 +13,9 @@ import {PricingComponent} from './pricing/pricing.component';
 import {PrivacyComponent} from './privacy/privacy.component';
 import {ResetComponent} from '../../core/authentication/reset/reset.component';
 import {ConfirmedComponent} from '../../core/authentication/confirmed/confirmed.component';
+import {ArticleComponent} from '../../shared/components/article/article.component';
+import {ActivationComponent} from '../../core/authentication/activation/activation.component';
+import {PassrecoveryComponent} from '../../core/authentication/passrecovery/passrecovery.component';
 
 const routes: Routes = [{
   path: '',
@@ -39,19 +42,31 @@ const routes: Routes = [{
       component: BlogComponent,
     },
     {
-      path: 'login',
-      component: LoginComponent,
+      path: 'article/:id',
+      component: ArticleComponent,
     },
     {
       path: 'registration',
       component: RegistrationComponent,
     },
     {
+      path: 'activation/:uid/:token',
+      component: ActivationComponent,
+    },
+    {
+      path: 'login',
+      component: LoginComponent,
+    },
+    {
+      path: 'passrecovery',
+      component: PassrecoveryComponent,
+    },
+    {
       path: 'confirmed',
       component: ConfirmedComponent,
     },
     {
-      path: 'reset',
+      path: 'resetpassword/:uid/:token',
       component: ResetComponent,
     },
     {

@@ -1,24 +1,43 @@
+<div class="top">
+  <div class="wrapper">
+    <h1>Login</h1>
+    <p>Login or register an account</p>
+  </div>
+</div>
 <div class="login">
   <div class="login__content">
     <div class="form login__form">
       <div class="wrapper">
-        <form>
-          <div class="form__field">
-            <input placeholder="E-mail" type="text">
+        <form [formGroup]="form" (ngSubmit)="submitLoginForm()">
+          <div class="form__field" [ngClass]="{'has-error': form.get('email').invalid && form.get('email').touched}">
+            <label><b>Your e-mail</b></label>
+            <input type="text" formControlName="email" name="email">
+            <sup *ngIf="form.get('email').invalid && form.get('email').touched">
+              <span *ngIf="form.get('email')['errors']['required']">Email is required!</span>
+              <span *ngIf="form.get('email')['errors']['email']">Please enter a valid email</span>
+            </sup>
           </div>
-          <div class="form__field">
-            <input placeholder="Password" type="text">
+          <div class="form__field" [ngClass]="{'has-error': form.get('password').invalid && form.get('password').touched}">
+            <label><b>Enter your password</b> <span>min. 6 characters</span></label>
+            <input type="password" formControlName="password" name="password">
+            <sup *ngIf="form.get('password').invalid && form.get('password').touched">
+              <span *ngIf="form.get('password')['errors']['required']">Password is required!</span>
+              <span *ngIf="form.get('password')['errors']['minlength'] && form.get('password')['errors']['minlength']['requiredLength']">
+              The password must be more than {{form.get('password')['errors']['minlength']['requiredLength']}}
+                characters! Now {{form.get('password')['errors']['minlength']['actualLength']}}</span>
+            </sup>
           </div>
+          <sup *ngIf="errorMessage">{{errorMessage.detail}}</sup>
           <div class="form__buttons">
             <div class="form__left">
-              <button class="button">Login</button>
+              <button class="button" type="submit" [disabled]="form.invalid">Login</button>
               <label  class="form__checkbox">
                 <input checked type="checkbox" name="type">
                 <a><span></span> <p>Remember me</p></a>
               </label>
             </div>
             <div class="form__forgot">
-              <a href="">Forgot Password?</a>
+              <a [routerLink]="['/passrecovery']">Forgot Password?</a>
             </div>
           </div>
         </form>
@@ -29,29 +48,10 @@
         <div class="login__gradient">
           <h2>Want to sign-up?</h2>
           <p>Awesome! It is totally free and takes only 30 seconds.</p>
-          <a href="" class="button button-white">Sign-up</a>
+          <a [routerLink]="['/registration']" class="button button-white">Sign-up</a>
         </div>
       </div>
     </div>
   </div>
 </div>
-<div class="recovery">
-  <div class="wrapper">
-    <div class="recovery__content">
-      <div class="form recovery__form">
-        <h2>Password Recovery</h2>
-        <form>
-          <div class="form__field">
-            <input placeholder="E-mail" type="text">
-          </div>
-          <div class="form__captcha">
-            <img src="../../../../assets/images/captcha.jpg" alt=""/>
-          </div>
-          <div class="form__buttons">
-            <button class="button">Reset password</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
+

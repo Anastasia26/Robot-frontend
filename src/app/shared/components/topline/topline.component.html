@@ -1,0 +1,36 @@
+<div class="header__top">
+    <div class="wrapper">
+        <ng-container *ngIf="isAuthenticated">
+            <div class="header__personal">
+                <a [routerLink]="['/login']" class="header__lk">
+                    <img src="../../../../assets/images/personal.svg" alt=""/>
+                </a>
+                <a class="header__sign">
+                    {{user['user']['email']}}
+                </a>
+                <a (click)="logout()" class="header__logout">
+                    Logout
+                </a>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="!isAuthenticated">
+        <div class="header__personal">
+            <a [routerLink]="['/registration']" class="header__lk">
+                <img src="../../../../assets/images/personal.svg" alt=""/>
+            </a>
+            <a [routerLink]="['/registration']" class="header__sign">
+                Sign-up
+            </a>
+            <a [routerLink]="['/login']" class="header__login">
+                Login
+            </a>
+        </div>
+        </ng-container>
+
+        <div class="header__personal-mobile">
+            <a [routerLink]="['/login']"><img src="../../../../assets/images/personal.svg" alt=""/></a>
+        </div>
+    </div>
+
+
+</div>

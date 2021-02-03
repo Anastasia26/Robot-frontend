@@ -1,26 +1,9 @@
-<div class="header">
-  <div class="header__top">
-    <div class="wrapper">
-      <div class="header__personal">
-        <a [routerLink]="['/login']" class="header__lk">
-          <img src="../../../../assets/images/personal.svg" alt=""/>
-        </a>
-        <a [routerLink]="['/registration']" class="header__sign">
-          Sign-up
-        </a>
-        <a [routerLink]="['/login']" class="header__login">
-          Login
-        </a>
-      </div>
-      <div class="header__personal-mobile">
-        <a [routerLink]="['/login']"><img src="../../../../assets/images/personal.svg" alt=""/></a>
-      </div>
-    </div>
-  </div>
-  <div class="header__main">
+<div class="header__main">
     <div class="wrapper">
       <div class="header__logo">
-        <img src="../../../../assets/images/logo.svg" alt=""/>
+        <a [routerLink]="['/']">
+          <img src="../../../../assets/images/logo.svg" alt=""/>
+        </a>
       </div>
       <div class="header__nav">
         <div class="header__links">
@@ -35,7 +18,7 @@
           <a href=""><img src="../../../../assets/images/message.png" alt=""/></a>
         </div>
       </div>
-      <div style="display: none" class="header__nav-mobile">
+      <div style="display: none" class="header__nav-mobile" [@openClose]="isOpen ? true : false">
         <a [routerLink]="['/faq']">FAQ</a>
         <a [routerLink]="['/about']">About</a>
         <a [routerLink]="['/support']">Support</a>
@@ -43,9 +26,9 @@
         <a [routerLink]="['/registration']">Sign-up</a>
         <a [routerLink]="['/login']">Login</a>
       </div>
-      <div class="header__burger inactive">
+      <div class="header__burger inactive" (click)="openMobMenu()">
         <span></span>
       </div>
     </div>
   </div>
-</div>
+

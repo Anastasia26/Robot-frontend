@@ -1,4 +1,4 @@
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, CanActivate } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { UserComponent } from './user.component';
 import {LoginComponent} from '../../core/authentication/login/login.component';
@@ -8,10 +8,12 @@ import {ConfirmedComponent} from '../../core/authentication/confirmed/confirmed.
 import {SettingsComponent} from './settings/settings.component';
 import {UserDashboardComponent} from './user-dashboard/user-dashboard.component';
 import {DeleteComponent} from './delete/delete.component';
+import {AuthGuardService} from '../../core/guards/auth.guard';
 
 const routes: Routes = [{
   path: '',
   component: UserComponent,
+  canActivate: [ AuthGuardService ],
   children: [
     {
       path: 'user-dashboard',
