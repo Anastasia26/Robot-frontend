@@ -2,6 +2,9 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {ofType} from '@ngrx/effects';
+import {UserActionTypes} from '../store/actions/user.action';
 
 
 @Injectable()
@@ -40,7 +43,6 @@ export class UserService {
     }
     refreshToken(refresh: string): Observable<any> {
         const url = environment.apiEndpoint + `/auth/jwt/refresh/`;
-        console.log(refresh);
         return this.http.post<any>(url, {refresh});
     }
 }

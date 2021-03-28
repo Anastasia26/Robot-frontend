@@ -1,0 +1,13 @@
+<ng-container *ngIf="mode == 'confirm'">
+    <div class="modal modal-confirm">
+        <div class="modal__overlay modal__hide"></div>
+        <div class="modal-confirm__body">
+            <h2>{{headertext}}</h2>
+            <p>{{bodytext}}</p>
+            <div class="modal-confirm__buttons">
+                <button class="button">Resend email</button>
+                <button class="button modal__hide" (click)="close()">OK</button>
+            </div>
+        </div>
+    </div>
+</ng-container>

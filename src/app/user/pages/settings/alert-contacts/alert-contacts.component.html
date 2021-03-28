@@ -1,0 +1,42 @@
+<div class="settings__top">
+    <h2><img src="../../../../../assets/images/alert.png" alt=""/> Alert Contacts</h2>
+    <button class="button settings__button modal-alert-show" (click)="openAlertContactModal()">Add Alert Contact</button>
+</div>
+<div class="settings__alert">
+    <h3>here are 1 alert contacts ( hide them).</h3>
+    <div class="settings__table">
+        <div class="settings__top-row">
+            <div class="settings__left">
+                <p class="settings__type">Type</p>
+                <p class="settings__contact">Alert Contact</p>
+            </div>
+            <div class="settings__right">
+                <p class="settings__action">Action</p>
+            </div>
+        </div>
+        <div class="settings__row" *ngFor="let alert_contact of alertInfo">
+            <div class="settings__left">
+                <p class="settings__type"><img alt="" src="../../../../../assets/images/mail.png"/></p>
+                <p class="settings__contact" >{{alert_contact['email']}}</p>
+            </div>
+            <div class="settings__right">
+                <p class="settings__action">
+                    <button class="settings__edit" (click)="openEditContactModal(alert_contact['id'], alert_contact['email'])">
+                        <img alt="" src="../../../../../assets/images/pen-blue.png"/>
+                    </button>
+                    <button class="settings__pause">
+                        <img alt="" src="../../../../../assets/images/pause.png"/>
+                    </button>
+                </p>
+            </div>
+        </div>
+    </div>
+    <app-modal-contacts [id]="'alertFinish'"
+                [mode]="'alert-contacts'"
+                [headertext]="headerAlertText"
+                [btnalertName]="btnAlertName"
+                [bodytext]="'Alert Contact Information'"
+                (submitAlertContactEvent)="submitAlertContactData($event)">
+    </app-modal-contacts>
+</div>
+

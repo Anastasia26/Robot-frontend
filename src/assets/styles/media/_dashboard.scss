@@ -3,7 +3,7 @@
   .wrapper{
     max-width: 1850px;
     padding: 0 15px;
-    min-width: 1024px;
+    //  min-width: 1024px;
   }
 }
 .header{
@@ -269,7 +269,7 @@
     }
   }
   &__item{
-    padding: 10px 0;
+    padding: 10px 0 0 20px;
     position: relative;
     width: 100%;
   }
@@ -331,7 +331,7 @@
     }
   }
   &__modal{
-    display: none;
+    visibility: hidden;
     position: absolute;
     top: calc(100% + 4px);
     right: calc(100% - 4px);
@@ -367,7 +367,7 @@
     }
   }
   &__captcha{
-    display: none;
+    visibility: hidden;
     position: absolute;
     right: calc(100% + 13px);
     top: 5px;
@@ -494,9 +494,9 @@
     z-index: 15;
   }
   input:checked + .switch__slider:before {
-     -webkit-transform: translateX(27px);
-     -ms-transform: translateX(27px);
-     transform: translateX(27px);
+    -webkit-transform: translateX(27px);
+    -ms-transform: translateX(27px);
+    transform: translateX(27px);
   }
   &__red, &__green{
     position: absolute;
@@ -583,6 +583,7 @@
 
 /*Site Info*/
 .site-info{
+  display: none;
   &__switch{
     position: absolute;
     top: 30px;
@@ -634,6 +635,9 @@
     box-shadow: -9px -9px 16px rgba(72, 72, 72, 0.5), 9px 9px 8px rgba(54, 54, 54, 0.5);
     border-radius: 19px;
     overflow: hidden;
+    .p-accordion-header {
+      display: none;
+    }
   }
   &__gear{
     cursor: pointer;
@@ -850,6 +854,9 @@
       width: 176px;
       border-radius: 10px;
       height: 44px;
+    }
+    .fast-port-scan {
+      margin-right: 20px;
     }
     .button-load{
       width: 200px;
@@ -2227,7 +2234,7 @@
       align-items: center;
     }
     .button{
-      width: 170px;
+      width: 200px;
       height: 49px;
       border-radius: 10px;
       font-style: normal;
@@ -2256,7 +2263,7 @@
   }
   &__left{
     padding: 0 15px 0 0;
-    width: 45%;
+    width: 40%;
     max-width: 520px;
   }
   &__content{
@@ -2265,9 +2272,11 @@
     justify-content: space-between;
     flex-wrap: wrap;
     padding-top: 23px;
+    height: 300px;
+    overflow-x: auto;
   }
   &__row{
-    width: 200px;
+    //width: 200px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -2445,6 +2454,10 @@
   .account{
     .wrapper{
       flex-direction: row;
+      -webkit-box-orient:horizontal;
+      -webkit-box-direction:normal;
+      -ms-flex-direction:row;
+      flex-direction:row
     }
     &__left{
       width: calc(33% - 15px);
@@ -2463,3 +2476,4 @@
   }
   /*Deleted END*/
 }
+

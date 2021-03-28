@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
 import {UserState, selectUserState} from '../../../core/store/state/user.state';
-import {LogOut} from '../../../core/store/actions/user.action';
+import {UserInfo, LogOut} from '../../../core/store/actions/user.action';
 import {Router} from '@angular/router';
-import {UserInfo} from '../../../core/store/actions/user.action';
 
 @Component({
   selector: 'app-topline',

@@ -1,0 +1,50 @@
+<ng-container *ngIf="mode == 'modal-edit-sites'">
+    <div class="modal modal-sites">
+        <div class="modal__overlay modal__hide"></div>
+        <div class="modal-sites__body">
+            <div class="modal__close modal__hide">
+                <img src="../../../../../assets/images/close.png" alt="" (click)="close('modal-edit-sites')"/>
+            </div>
+            <div class="modal-sites__top">
+                <div class="modal-sites__left">
+                    <h2><img src="../../../../../assets/images/glob.png" alt=""/> {{headertext}}</h2>
+                </div>
+                <div class="modal-sites__right">
+                    <h2>{{bodytext}}</h2>
+                </div>
+            </div>
+            <div class="modal-sites__content">
+                <div class="modal-sites__right">
+                    <div class="modal-sites__checkboxes">
+                        <div *ngFor="let alert_contact of alertInfo; index as i">
+                            <label class="form__checkbox modal-sites__checkbox">
+                                <input type="checkbox" *ngIf="domainsID" [checked]="getDimensionsByFind(alert_contact['id'])" name="type"
+                                       (change)="AddAlertsInfoName(alert_contact['id'])">
+                                <span></span>
+                                <p>{{alert_contact['email']}}</p>
+                            </label>
+                        </div>
+                        <sup *ngIf="errorMessage">
+                            <span *ngIf="errorMessage['domain']">{{errorMessage['domain']}}</span>
+                        </sup>
+                    </div>
+                    <div class="modal-sites__other">
+                        <h3>Other sites</h3>
+                        <div class="modal-sites__list">
+                            <div class="modal-sites__scroll">
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-reset__buttons">
+                <button class="button button-cancel modal__hide" (click)="close('modal-edit-sites')">Close</button>
+                <button class="button button-load" [disabled]="errorMessage || applyLoading" (click)="ApplyCheckedResults()">Apply
+                    <div class="circle-loader" *ngIf="applyLoading"><app-spinner></app-spinner></div>
+                </button>
+            </div>
+        </div>
+    </div>
+</ng-container>
+

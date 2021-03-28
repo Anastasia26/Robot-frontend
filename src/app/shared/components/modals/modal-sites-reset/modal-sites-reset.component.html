@@ -1,0 +1,37 @@
+<ng-container *ngIf="mode == 'modal-reset'">
+    <div class="modal modal-reset">
+        <div class="modal__overlay modal__hide"></div>
+        <div class="modal-reset__body">
+            <h2>{{headertext}}</h2>
+            <div class="modal-reset__content">
+                <p class="modal-reset__sub">{{domainsName}}</p>
+                <div *ngIf="resetInfo">
+                    <div class="modal-reset__row">
+                        <p>http</p>
+                        <p-toggleButton class="button" [(ngModel)]="resetInfo['http']" (onChange)="ResetHttp(resetInfo['http'])" onLabel="Reset" offLabel="Add" [style]="{'width': '10em'}"></p-toggleButton>
+                    </div>
+                    <div class="modal-reset__row">
+                        <p>https</p>
+                        <p-toggleButton class="button" [(ngModel)]="resetInfo['https']" (onChange)="ResetHttps(resetInfo['https'])" onLabel="Reset" offLabel="Add" [style]="{'width': '10em'}"></p-toggleButton>
+                    </div>
+                    <div class="modal-reset__row">
+                        <p>ping</p>
+                        <p-toggleButton class="button" [(ngModel)]="resetInfo['ping']" (onChange)="ResetPing(resetInfo['ping'])" onLabel="Reset" offLabel="Add" [style]="{'width': '10em'}"></p-toggleButton>
+                    </div>
+                    <div class="modal-reset__row">
+                        <p>ssl</p>
+                        <p-toggleButton class="button" [(ngModel)]="resetInfo['ssl']" (onChange)="ResetSsl(resetInfo['ssl'])" onLabel="Reset" offLabel="Add" [style]="{'width': '10em'}"></p-toggleButton>
+                    </div>
+                    <div class="modal-reset__row" *ngFor="let port of resetInfo['available_ports']">
+                        <p>{{port['number']}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-reset__buttons">
+                <button class="button button-cancel modal__hide" (click)="close()">Close</button>
+                <button class="button  modal__hide" (click)="ResetDomains()">Ok</button>
+            </div>
+        </div>
+    </div>
+</ng-container>
+

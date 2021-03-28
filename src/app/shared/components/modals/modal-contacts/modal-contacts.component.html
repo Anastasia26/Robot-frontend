@@ -1,0 +1,39 @@
+<ng-container *ngIf="mode == 'alert-contacts'">
+    <div class="modal modal-alert">
+        <div class="modal__overlay modal__hide"></div>
+        <div class="modal-alert__body">
+            <h2>{{headertext}}</h2>
+            <h3>{{bodytext}}</h3>
+            <div class="modal-alert__row">
+                <p>Number of Alert Contact Type <sup>*</sup></p>
+                <select class="select modal-alert__select">
+                    <img src="../../../../../assets/images/down.svg" alt="">
+                    <option>Email</option>
+                </select>
+            </div>
+            <form [formGroup]="formEmail" (ngSubmit)="createEmailAlertContact()">
+                <div class="modal-alert__row"
+                     [ngClass]="{'has-error': formEmail.get('email').invalid && formEmail.get('email').touched}">
+                    <p>E-mail <sup>*</sup></p>
+                    <input formControlName="email" placeholder="example@200cai.com" type="email"/>
+                    <sup *ngIf="formEmail.get('email').invalid && formEmail.get('email').touched">
+                        <span *ngIf="formEmail.get('email')['errors']['required']">Email is required!</span>
+                        <span *ngIf="formEmail.get('email')['errors']['email']">Please enter a valid email</span>
+                    </sup>
+                    <sup *ngIf="errorMessage">
+                        <span *ngIf="errorMessage['email']">{{errorMessage['email']}}</span>
+                    </sup>
+                </div>
+                <div class="modal-alert__buttons">
+                    <button class="button button-cancel modal__hide" type="button" (click)="close()">Close</button>
+                    <button class="button button-load" type="submit" [disabled]="formEmail.invalid || loading">Create
+                        Alert Contact
+                        <div class="circle-loader" *ngIf="loading">
+                            <app-spinner></app-spinner>
+                        </div>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</ng-container>

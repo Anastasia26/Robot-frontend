@@ -5,6 +5,7 @@ import {Activation} from '../../store/actions/user.action';
 import {Store} from '@ngrx/store';
 import {UserState, selectUserState} from '../../store/state/user.state';
 import {Observable} from 'rxjs';
+import {Actions} from '@ngrx/effects';
 
 
 @Component({
@@ -17,10 +18,10 @@ export class ActivationComponent implements OnInit {
   token: string;
   getState: Observable<any>;
   errorMessage: string | null;
-
   constructor(private store: Store<UserState>,
               private authenticationService: UserService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private actions: Actions) {
     this.getState = this.store.select(selectUserState);
     this.getState.subscribe((state) => {
       this.errorMessage = state.errorMessage;

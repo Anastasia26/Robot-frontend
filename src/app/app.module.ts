@@ -18,9 +18,10 @@ import {ArticleService} from './shared/services/article.service';
 import { AppComponent } from './app.component';
 import {reducers} from './core/store/state/user.state';
 import {UserEffects} from './core/store/effects/user.effects';
+import {UserInfoEffects} from './core/store/effects/user-info.effects';
 import {JwtInterceptor} from './core/helpers/jwt.interceptor';
 import {ErrorInterceptor} from './core/helpers/error.interceptor';
-
+import {TreeModule} from 'primeng/tree';
 
 
 
@@ -40,9 +41,10 @@ import {ErrorInterceptor} from './core/helpers/error.interceptor';
     AdminModule,
     SharedModule,
     UserModule,
+    TreeModule,
     AppRoutingModule,
     StoreModule.forRoot(reducers, {}),
-    EffectsModule.forRoot([UserEffects]),
+    EffectsModule.forRoot([UserEffects, UserInfoEffects]),
   ],
   exports: [RouterModule],
   providers: [ArticleService,

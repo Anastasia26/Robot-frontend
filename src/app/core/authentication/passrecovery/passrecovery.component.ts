@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 import {Store} from '@ngrx/store';
 import {UserState, selectUserState} from '../../store/state/user.state';
 import {UserActionTypes, ClearAllFailureMessage, PasswordRecovery} from '../../store/actions/user.action';
+import {tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-passrecovery',
@@ -17,7 +18,7 @@ export class PassrecoveryComponent implements OnInit {
   form: FormGroup;
   getState: Observable<any>;
   errorMessage: string | null;
-
+  private loading: boolean;
   constructor(private actions: Actions, private modalsService: ModalsService, private router: Router, private store: Store<UserState>) {
     this.getState = this.store.select(selectUserState);
     this.errorMessage = null;
@@ -35,10 +36,15 @@ export class PassrecoveryComponent implements OnInit {
   }
 
   submitPasswordRecovery(): any {
+    this.loading = true;
     const payload = {
       email: this.form.value.email
     };
     this.store.dispatch(new PasswordRecovery(payload));
+    this.actions.pipe(ofType(UserActionTypes.ERRORS_FAILURE_MESSAGE))
+        .subscribe(() => {
+          this.loading = false;
+        });
   }
 
   closeResetPassword(): any {

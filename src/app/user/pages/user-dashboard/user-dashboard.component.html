@@ -66,20 +66,18 @@
     </div>
   </div>
 </div>
-<div class="account__item site-info">
+<div class="account__item site-info" [ngClass]="{'visibleSiteInfo': domainId}">
   <label class="site-info__switch switch">
     <input checked type="checkbox">
-    <span class="switch__slider">
-                        </span>
+    <span class="switch__slider"></span>
     <span class="switch__red">Off</span>
     <span class="switch__green">On</span>
   </label>
-  <div class="site-info__content">
-    <h2>Site1.com</h2>
+  <div class="site-info__content" *ngFor="let ip_address of ipAddresses; index as i">
+    <h2>{{domainName}}</h2>
     <div class="site-info__sub">
       <div class="site-info__ips">
-        <p>73.145.206.123</p>
-        <p>105.145.206.123</p>
+        <p>{{ip_address.address}}</p>
       </div>
       <p class="site-info__ports">Open ports</p>
     </div>
@@ -87,9 +85,9 @@
       <div class="site-info__item">
         <div class="site-info__main">
           <div class="site-info__gear">
-            <img src="../../../../assets/images/gear2.png" alt=""/>
+            <img src="../../../../assets/images/gear2.png" (click)="openDomainSetting(i, ip_address['id'])" alt=""/>
           </div>
-          <h3>173.145.206.123</h3>
+          <h3>{{ip_address.address}}</h3>
           <div class="site-info__graph">
           </div>
           <div class="site-info__result">
@@ -115,734 +113,354 @@
             </div>
           </div>
         </div>
-        <div style="display: block" class="site-info__expand">
-          <div class="site-info__expand-top">
-            <div class="site-info__settings">
-              <h2>Settings</h2>
-            </div>
-            <div class="site-info__type">
-              <h2>Type scan: TCP</h2>
-            </div>
-          </div>
-          <div class="site-info__expand-content">
-            <div class="site-info__settings">
-              <div class="site-info__switches">
-                <div class="site-info__column">
-                  <div class="site-info__option">
-                    <p>Ping</p>
-                    <label class="switch">
-                      <input type="checkbox">
-                      <span class="switch__slider">
-                                                            </span>
-                      <span class="switch__red">Off</span>
-                      <span class="switch__green">On</span>
-                    </label>
-                  </div>
-                  <div class="site-info__option">
-                    <p>Http</p>
-                    <label class="switch">
-                      <input checked type="checkbox">
-                      <span class="switch__slider">
-                                                            </span>
-                      <span class="switch__red">Off</span>
-                      <span class="switch__green">On</span>
-                    </label>
-                  </div>
-                  <div class="site-info__option">
-                    <p>Https</p>
-                    <label class="switch">
-                      <input type="checkbox">
-                      <span class="switch__slider">
-                                                            </span>
-                      <span class="switch__red">Off</span>
-                      <span class="switch__green">On</span>
-                    </label>
-                  </div>
-                  <div class="site-info__option">
-                    <p>SSL Verify</p>
-                    <label class="switch">
-                      <input checked type="checkbox">
-                      <span class="switch__slider">
-                                                            </span>
-                      <span class="switch__red">Off</span>
-                      <span class="switch__green">On</span>
-                    </label>
-                  </div>
+        <p-accordion>
+          <p-accordionTab [(selected)]="activeState[i]">
+            <div style="display: block" class="site-info__expand">
+              <div class="site-info__expand-top">
+                <div class="site-info__settings">
+                  <h2>Settings</h2>
                 </div>
-                <div class="site-info__column">
-                  <div class="site-info__option">
-                    <p>21</p>
-                    <label class="switch">
-                      <input type="checkbox">
-                      <span class="switch__slider">
-                                                            </span>
-                      <span class="switch__red">Off</span>
-                      <span class="switch__green">On</span>
-                    </label>
-                  </div>
-                  <div class="site-info__option">
-                    <p>22</p>
-                    <label class="switch">
-                      <input checked type="checkbox">
-                      <span class="switch__slider">
-                                                            </span>
-                      <span class="switch__red">Off</span>
-                      <span class="switch__green">On</span>
-                    </label>
-                  </div>
-                  <div class="site-info__option">
-                    <p>53</p>
-                    <label class="switch">
-                      <input type="checkbox">
-                      <span class="switch__slider">
-                                                            </span>
-                      <span class="switch__red">Off</span>
-                      <span class="switch__green">On</span>
-                    </label>
-                  </div>
-                  <div class="site-info__option">
-                    <p>8080</p>
-                    <label class="switch">
-                      <input checked type="checkbox">
-                      <span class="switch__slider">
-                                                            </span>
-                      <span class="switch__red">Off</span>
-                      <span class="switch__green">On</span>
-                    </label>
-                  </div>
-                  <div class="site-info__option">
-                    <p>10000</p>
-                    <label class="switch">
-                      <input checked type="checkbox">
-                      <span class="switch__slider">
-                                                            </span>
-                      <span class="switch__red">Off</span>
-                      <span class="switch__green">On</span>
-                    </label>
-                  </div>
-                  <div class="site-info__option">
-                    <p>35000</p>
-                    <label class="switch">
-                      <input checked type="checkbox">
-                      <span class="switch__slider">
-                                                            </span>
-                      <span class="switch__red">Off</span>
-                      <span class="switch__green">On</span>
-                    </label>
-                  </div>
+                <div class="site-info__type">
+                  <h2>Type scan: TCP</h2>
                 </div>
               </div>
-              <div class="site-info__scan">
-                <div>
-                  <button class="button">Fast Port Scan</button>
-                </div>
-                <div>
-                  <button class="button">Full Port Scan</button>
-                  <button class="button button-load">Full Port Scan <span><img
-                    src="../../../../assets/images/load.png" alt=""/></span></button>
-                </div>
-              </div>
-            </div>
-            <div class="site-info__type">
-              <div class="site-info__table tcp-table">
-                <div class="tcp-table__top-row">
-                  <div class="tcp-table__port">
-                    <h3>Port</h3>
-                  </div>
-                  <div class=" tcp-table__information">
-                    <div class="tcp-table__available">
-                      <h3>Status</h3>
-                    </div>
-                    <div class="tcp-table__description">
-                      <h3>Description</h3>
-                    </div>
-                  </div>
-                </div>
-                <div class="tcp-table__rows">
-                  <div class="tcp-table__row">
-                    <div class="tcp-table__port">
-                      <p>144</p>
-                    </div>
-                    <div class="tcp-table__information">
-                      <div class="tcp-table__available">
-                        <p>not available</p>
+
+              <div class="site-info__expand-content">
+                <div class="site-info__settings">
+                  <div class="site-info__switches">
+                    <div class="site-info__column">
+                      <div class="site-info__option">
+                        <p>Ping</p>
+
+                        <label class="switch">
+                          <input type="checkbox" [(ngModel)]="pingStatus">
+                          <span class="switch__slider"></span>
+                          <span class="switch__red">Off</span>
+                          <span class="switch__green">On</span>
+                        </label>
                       </div>
-                      <div class="tcp-table__description">
-                        <p></p>
+                      <div class="site-info__option">
+                        <p>Http</p>
+                        <label class="switch">
+                          <input checked type="checkbox" [(ngModel)]="httpStatus">
+                          <span class="switch__slider"></span>
+                          <span class="switch__red">Off</span>
+                          <span class="switch__green">On</span>
+                        </label>
                       </div>
-                    </div>
-                  </div>
-                  <div class="tcp-table__row">
-                    <div class="tcp-table__port">
-                      <p>132</p>
-                    </div>
-                    <div class="tcp-table__information">
-                      <div class="tcp-table__available">
-                        <p><span>available</span></p>
+                      <div class="site-info__option">
+                        <p>Https</p>
+                        <label class="switch">
+                          <input type="checkbox" [(ngModel)]="httpsStatus">
+                          <span class="switch__slider"></span>
+                          <span class="switch__red">Off</span>
+                          <span class="switch__green">On</span>
+                        </label>
                       </div>
-                      <div class="tcp-table__description">
-                        <p>Lorem Ipsum is simply dummy text.</p>
+                      <div class="site-info__option">
+                        <p>SSL Verify</p>
+                        <label class="switch">
+                          <input checked type="checkbox" [(ngModel)]="sslStatus">
+                          <span class="switch__slider"></span>
+                          <span class="switch__red">Off</span>
+                          <span class="switch__green">On</span>
+                        </label>
                       </div>
                     </div>
-                  </div>
-                  <div class="tcp-table__row">
-                    <div class="tcp-table__port">
-                      <p>21</p>
-                    </div>
-                    <div class="tcp-table__information">
-                      <div class="tcp-table__available">
-                        <p>not available</p>
+                    <div class="site-info__column">
+                      <div class="site-info__option">
+                        <p>21</p>
+                        <label class="switch">
+                          <input type="checkbox">
+                          <span class="switch__slider">
+                                                            </span>
+                          <span class="switch__red">Off</span>
+                          <span class="switch__green">On</span>
+                        </label>
                       </div>
-                      <div class="tcp-table__description">
-                        <p>Lorem Ipsum </p>
+                      <div class="site-info__option">
+                        <p>22</p>
+                        <label class="switch">
+                          <input checked type="checkbox">
+                          <span class="switch__slider">
+                                                            </span>
+                          <span class="switch__red">Off</span>
+                          <span class="switch__green">On</span>
+                        </label>
                       </div>
-                    </div>
-                  </div>
-                  <div class="tcp-table__row">
-                    <div class="tcp-table__port">
-                      <p>21</p>
-                    </div>
-                    <div class="tcp-table__information">
-                      <div class="tcp-table__available">
-                        <p>not available</p>
+                      <div class="site-info__option">
+                        <p>53</p>
+                        <label class="switch">
+                          <input type="checkbox">
+                          <span class="switch__slider">
+                                                            </span>
+                          <span class="switch__red">Off</span>
+                          <span class="switch__green">On</span>
+                        </label>
                       </div>
-                      <div class="tcp-table__description">
-                        <p>Lorem Ipsum is simply.</p>
+                      <div class="site-info__option">
+                        <p>8080</p>
+                        <label class="switch">
+                          <input checked type="checkbox">
+                          <span class="switch__slider">
+                                                            </span>
+                          <span class="switch__red">Off</span>
+                          <span class="switch__green">On</span>
+                        </label>
                       </div>
-                    </div>
-                  </div>
-                  <div class="tcp-table__row">
-                    <div class="tcp-table__port">
-                      <p>21</p>
-                    </div>
-                    <div class="tcp-table__information">
-                      <div class="tcp-table__available">
-                        <p>not available</p>
+                      <div class="site-info__option">
+                        <p>10000</p>
+                        <label class="switch">
+                          <input checked type="checkbox">
+                          <span class="switch__slider">
+                                                            </span>
+                          <span class="switch__red">Off</span>
+                          <span class="switch__green">On</span>
+                        </label>
                       </div>
-                      <div class="tcp-table__description">
-                        <p> dummy text.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tcp-table__row">
-                    <div class="tcp-table__port">
-                      <p>21</p>
-                    </div>
-                    <div class="tcp-table__information">
-                      <div class="tcp-table__available">
-                        <p>not available</p>
-                      </div>
-                      <div class="tcp-table__description">
-                        <p>Lorem Ipsum is simply dummy text.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tcp-table__row">
-                    <div class="tcp-table__port">
-                      <p>21</p>
-                    </div>
-                    <div class="tcp-table__information">
-                      <div class="tcp-table__available">
-                        <p>not available</p>
-                      </div>
-                      <div class="tcp-table__description">
-                        <p>Lorem Ipsum is simply dummy text.</p>
+                      <div class="site-info__option">
+                        <p>35000</p>
+                        <label class="switch">
+                          <input checked type="checkbox">
+                          <span class="switch__slider">
+                                                            </span>
+                          <span class="switch__red">Off</span>
+                          <span class="switch__green">On</span>
+                        </label>
                       </div>
                     </div>
                   </div>
-                  <div class="tcp-table__row">
-                    <div class="tcp-table__port">
-                      <p>21</p>
+                  <div class="site-info__scan">
+                    <div>
+                      <button class="button fast-port-scan" (click)="FastPortScan()">Fast Port Scan</button>
                     </div>
-                    <div class="tcp-table__information">
-                      <div class="tcp-table__available">
-                        <p>not available</p>
-                      </div>
-                      <div class="tcp-table__description">
-                        <p>Lorem Ipsum is simply dummy text.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tcp-table__row">
-                    <div class="tcp-table__port">
-                      <p>21</p>
-                    </div>
-                    <div class="tcp-table__information">
-                      <div class="tcp-table__available">
-                        <p>not available</p>
-                      </div>
-                      <div class="tcp-table__description">
-                        <p>Lorem Ipsum is simply dummy text.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tcp-table__row">
-                    <div class="tcp-table__port">
-                      <p>21</p>
-                    </div>
-                    <div class="tcp-table__information">
-                      <div class="tcp-table__available">
-                        <p>not available</p>
-                      </div>
-                      <div class="tcp-table__description">
-                        <p>Lorem Ipsum is simply dummy text.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tcp-table__row">
-                    <div class="tcp-table__port">
-                      <p>21</p>
-                    </div>
-                    <div class="tcp-table__information">
-                      <div class="tcp-table__available">
-                        <p>not available</p>
-                      </div>
-                      <div class="tcp-table__description">
-                        <p>Lorem Ipsum is simply dummy text.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tcp-table__row">
-                    <div class="tcp-table__port">
-                      <p>21</p>
-                    </div>
-                    <div class="tcp-table__information">
-                      <div class="tcp-table__available">
-                        <p>not available</p>
-                      </div>
-                      <div class="tcp-table__description">
-                        <p>Lorem Ipsum is simply dummy text.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tcp-table__row">
-                    <div class="tcp-table__port">
-                      <p>21</p>
-                    </div>
-                    <div class="tcp-table__information">
-                      <div class="tcp-table__available">
-                        <p>not available</p>
-                      </div>
-                      <div class="tcp-table__description">
-                        <p>Lorem Ipsum is simply dummy text.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tcp-table__row">
-                    <div class="tcp-table__port">
-                      <p>21</p>
-                    </div>
-                    <div class="tcp-table__information">
-                      <div class="tcp-table__available">
-                        <p>not available</p>
-                      </div>
-                      <div class="tcp-table__description">
-                        <p>Lorem Ipsum is simply dummy text.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tcp-table__row">
-                    <div class="tcp-table__port">
-                      <p>21</p>
-                    </div>
-                    <div class="tcp-table__information">
-                      <div class="tcp-table__available">
-                        <p>not available</p>
-                      </div>
-                      <div class="tcp-table__description">
-                        <p>Lorem Ipsum is simply dummy text.</p>
-                      </div>
+                    <div>
+                      <button class="button">Full Port Scan</button>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div class="site-info__buttons">
-            <button class="button button-cancel site-info__close">Close</button>
-            <button class="button">Apple</button>
-          </div>
-        </div>
-      </div>
-      <div class="site-info__item">
-        <div class="site-info__main">
-          <div class="site-info__gear">
-            <img src="../../../../assets/images/gear2.png" alt=""/>
-          </div>
-          <h3>105.145.206.123</h3>
-          <div class="site-info__graph">
-          </div>
-          <div class="site-info__result">
-            <div class="site-info__text">
-              <p>Ping</p>
-              <p>Http</p>
-              <p>Https<span>SSL Verify</span></p>
-              <div class="site-info__status result-red">Error</div>
-            </div>
-            <div class="site-info__digits">
-              <p class="result-yellow">16</p>
-              <p class="result-green">17</p>
-              <p class="result-green">7</p>
-              <p class="result-green">5</p>
-              <p class="result-green">8</p>
-              <p class="result-green">3</p>
-              <p class="result-green">8</p>
-              <p class="result-green">11</p>
-              <p class="result-red">1</p>
-              <p class="result-yellow">8</p>
-              <p class="result-green">21</p>
-              <p class="result-green">3</p>
-            </div>
-          </div>
-        </div>
-        <div class="site-info__expand">
-          <div class="site-info__expand-top">
-            <div class="site-info__settings">
-              <h2>Settings</h2>
-            </div>
-            <div class="site-info__type">
-              <h2>Type scan: TCP</h2>
-            </div>
-          </div>
-          <div class="site-info__expand-content">
-            <div class="site-info__settings">
-              <div class="site-info__switches">
-                <div class="site-info__column">
-                  <div class="site-info__option">
-                    <p>Ping</p>
-                    <label class="switch">
-                      <input type="checkbox">
-                      <span class="switch__slider">
-                                                            </span>
-                      <span class="switch__red">Off</span>
-                      <span class="switch__green">On</span>
-                    </label>
-                  </div>
-                  <div class="site-info__option">
-                    <p>Http</p>
-                    <label class="switch">
-                      <input checked type="checkbox">
-                      <span class="switch__slider">
-                                                            </span>
-                      <span class="switch__red">Off</span>
-                      <span class="switch__green">On</span>
-                    </label>
-                  </div>
-                  <div class="site-info__option">
-                    <p>Https</p>
-                    <label class="switch">
-                      <input type="checkbox">
-                      <span class="switch__slider">
-                                                            </span>
-                      <span class="switch__red">Off</span>
-                      <span class="switch__green">On</span>
-                    </label>
-                  </div>
-                  <div class="site-info__option">
-                    <p>SSL Verify</p>
-                    <label class="switch">
-                      <input checked type="checkbox">
-                      <span class="switch__slider">
-                                                            </span>
-                      <span class="switch__red">Off</span>
-                      <span class="switch__green">On</span>
-                    </label>
-                  </div>
-                </div>
-                <div class="site-info__column">
-                  <div class="site-info__option">
-                    <p>21</p>
-                    <label class="switch">
-                      <input type="checkbox">
-                      <span class="switch__slider">
-                                                            </span>
-                      <span class="switch__red">Off</span>
-                      <span class="switch__green">On</span>
-                    </label>
-                  </div>
-                  <div class="site-info__option">
-                    <p>22</p>
-                    <label class="switch">
-                      <input checked type="checkbox">
-                      <span class="switch__slider">
-                                                            </span>
-                      <span class="switch__red">Off</span>
-                      <span class="switch__green">On</span>
-                    </label>
-                  </div>
-                  <div class="site-info__option">
-                    <p>53</p>
-                    <label class="switch">
-                      <input type="checkbox">
-                      <span class="switch__slider">
-                                                            </span>
-                      <span class="switch__red">Off</span>
-                      <span class="switch__green">On</span>
-                    </label>
-                  </div>
-                  <div class="site-info__option">
-                    <p>8080</p>
-                    <label class="switch">
-                      <input checked type="checkbox">
-                      <span class="switch__slider">
-                                                            </span>
-                      <span class="switch__red">Off</span>
-                      <span class="switch__green">On</span>
-                    </label>
-                  </div>
-                  <div class="site-info__option">
-                    <p>10000</p>
-                    <label class="switch">
-                      <input checked type="checkbox">
-                      <span class="switch__slider">
-                                                            </span>
-                      <span class="switch__red">Off</span>
-                      <span class="switch__green">On</span>
-                    </label>
-                  </div>
-                  <div class="site-info__option">
-                    <p>35000</p>
-                    <label class="switch">
-                      <input checked type="checkbox">
-                      <span class="switch__slider">
-                                                            </span>
-                      <span class="switch__red">Off</span>
-                      <span class="switch__green">On</span>
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div class="site-info__scan">
-                <div>
-                  <button class="button">Fast Port Scan</button>
-                </div>
-                <div>
-                  <button class="button">Full Port Scan</button>
-                  <button class="button button-load">Full Port Scan <span><img
-                    src="../../../../assets/images/load.png" alt=""/></span></button>
-                </div>
-              </div>
-            </div>
-            <div class="site-info__type">
-              <div class="site-info__table tcp-table">
-                <div class="tcp-table__top-row">
-                  <div class="tcp-table__port">
-                    <h3>Port</h3>
-                  </div>
-                  <div class=" tcp-table__information">
-                    <div class="tcp-table__available">
-                      <h3>Status</h3>
-                    </div>
-                    <div class="tcp-table__description">
-                      <h3>Description</h3>
-                    </div>
-                  </div>
-                </div>
-                <div class="tcp-table__rows">
-                  <div class="tcp-table__row">
-                    <div class="tcp-table__port">
-                      <p>144</p>
-                    </div>
-                    <div class="tcp-table__information">
-                      <div class="tcp-table__available">
-                        <p>not available</p>
+                <div class="site-info__type">
+                  <div class="site-info__table tcp-table">
+                    <div class="tcp-table__top-row">
+                      <div class="tcp-table__port">
+                        <h3>Port</h3>
                       </div>
-                      <div class="tcp-table__description">
-                        <p></p>
+                      <div class=" tcp-table__information">
+                        <div class="tcp-table__available">
+                          <h3>Status</h3>
+                        </div>
+                        <div class="tcp-table__description">
+                          <h3>Description</h3>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="tcp-table__row">
-                    <div class="tcp-table__port">
-                      <p>132</p>
-                    </div>
-                    <div class="tcp-table__information">
-                      <div class="tcp-table__available">
-                        <p><span>available</span></p>
+                    <div class="tcp-table__rows">
+                      <div class="tcp-table__row">
+                        <div class="tcp-table__port">
+                          <p>144</p>
+                        </div>
+                        <div class="tcp-table__information">
+                          <div class="tcp-table__available">
+                            <p>not available</p>
+                          </div>
+                          <div class="tcp-table__description">
+                            <p></p>
+                          </div>
+                        </div>
                       </div>
-                      <div class="tcp-table__description">
-                        <p>Lorem Ipsum is simply dummy text.</p>
+                      <div class="tcp-table__row">
+                        <div class="tcp-table__port">
+                          <p>132</p>
+                        </div>
+                        <div class="tcp-table__information">
+                          <div class="tcp-table__available">
+                            <p><span>available</span></p>
+                          </div>
+                          <div class="tcp-table__description">
+                            <p>Lorem Ipsum is simply dummy text.</p>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  <div class="tcp-table__row">
-                    <div class="tcp-table__port">
-                      <p>21</p>
-                    </div>
-                    <div class="tcp-table__information">
-                      <div class="tcp-table__available">
-                        <p>not available</p>
+                      <div class="tcp-table__row">
+                        <div class="tcp-table__port">
+                          <p>21</p>
+                        </div>
+                        <div class="tcp-table__information">
+                          <div class="tcp-table__available">
+                            <p>not available</p>
+                          </div>
+                          <div class="tcp-table__description">
+                            <p>Lorem Ipsum </p>
+                          </div>
+                        </div>
                       </div>
-                      <div class="tcp-table__description">
-                        <p>Lorem Ipsum </p>
+                      <div class="tcp-table__row">
+                        <div class="tcp-table__port">
+                          <p>21</p>
+                        </div>
+                        <div class="tcp-table__information">
+                          <div class="tcp-table__available">
+                            <p>not available</p>
+                          </div>
+                          <div class="tcp-table__description">
+                            <p>Lorem Ipsum is simply.</p>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  <div class="tcp-table__row">
-                    <div class="tcp-table__port">
-                      <p>21</p>
-                    </div>
-                    <div class="tcp-table__information">
-                      <div class="tcp-table__available">
-                        <p>not available</p>
+                      <div class="tcp-table__row">
+                        <div class="tcp-table__port">
+                          <p>21</p>
+                        </div>
+                        <div class="tcp-table__information">
+                          <div class="tcp-table__available">
+                            <p>not available</p>
+                          </div>
+                          <div class="tcp-table__description">
+                            <p> dummy text.</p>
+                          </div>
+                        </div>
                       </div>
-                      <div class="tcp-table__description">
-                        <p>Lorem Ipsum is simply.</p>
+                      <div class="tcp-table__row">
+                        <div class="tcp-table__port">
+                          <p>21</p>
+                        </div>
+                        <div class="tcp-table__information">
+                          <div class="tcp-table__available">
+                            <p>not available</p>
+                          </div>
+                          <div class="tcp-table__description">
+                            <p>Lorem Ipsum is simply dummy text.</p>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  <div class="tcp-table__row">
-                    <div class="tcp-table__port">
-                      <p>21</p>
-                    </div>
-                    <div class="tcp-table__information">
-                      <div class="tcp-table__available">
-                        <p>not available</p>
+                      <div class="tcp-table__row">
+                        <div class="tcp-table__port">
+                          <p>21</p>
+                        </div>
+                        <div class="tcp-table__information">
+                          <div class="tcp-table__available">
+                            <p>not available</p>
+                          </div>
+                          <div class="tcp-table__description">
+                            <p>Lorem Ipsum is simply dummy text.</p>
+                          </div>
+                        </div>
                       </div>
-                      <div class="tcp-table__description">
-                        <p> dummy text.</p>
+                      <div class="tcp-table__row">
+                        <div class="tcp-table__port">
+                          <p>21</p>
+                        </div>
+                        <div class="tcp-table__information">
+                          <div class="tcp-table__available">
+                            <p>not available</p>
+                          </div>
+                          <div class="tcp-table__description">
+                            <p>Lorem Ipsum is simply dummy text.</p>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  <div class="tcp-table__row">
-                    <div class="tcp-table__port">
-                      <p>21</p>
-                    </div>
-                    <div class="tcp-table__information">
-                      <div class="tcp-table__available">
-                        <p>not available</p>
+                      <div class="tcp-table__row">
+                        <div class="tcp-table__port">
+                          <p>21</p>
+                        </div>
+                        <div class="tcp-table__information">
+                          <div class="tcp-table__available">
+                            <p>not available</p>
+                          </div>
+                          <div class="tcp-table__description">
+                            <p>Lorem Ipsum is simply dummy text.</p>
+                          </div>
+                        </div>
                       </div>
-                      <div class="tcp-table__description">
-                        <p>Lorem Ipsum is simply dummy text.</p>
+                      <div class="tcp-table__row">
+                        <div class="tcp-table__port">
+                          <p>21</p>
+                        </div>
+                        <div class="tcp-table__information">
+                          <div class="tcp-table__available">
+                            <p>not available</p>
+                          </div>
+                          <div class="tcp-table__description">
+                            <p>Lorem Ipsum is simply dummy text.</p>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  <div class="tcp-table__row">
-                    <div class="tcp-table__port">
-                      <p>21</p>
-                    </div>
-                    <div class="tcp-table__information">
-                      <div class="tcp-table__available">
-                        <p>not available</p>
+                      <div class="tcp-table__row">
+                        <div class="tcp-table__port">
+                          <p>21</p>
+                        </div>
+                        <div class="tcp-table__information">
+                          <div class="tcp-table__available">
+                            <p>not available</p>
+                          </div>
+                          <div class="tcp-table__description">
+                            <p>Lorem Ipsum is simply dummy text.</p>
+                          </div>
+                        </div>
                       </div>
-                      <div class="tcp-table__description">
-                        <p>Lorem Ipsum is simply dummy text.</p>
+                      <div class="tcp-table__row">
+                        <div class="tcp-table__port">
+                          <p>21</p>
+                        </div>
+                        <div class="tcp-table__information">
+                          <div class="tcp-table__available">
+                            <p>not available</p>
+                          </div>
+                          <div class="tcp-table__description">
+                            <p>Lorem Ipsum is simply dummy text.</p>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  <div class="tcp-table__row">
-                    <div class="tcp-table__port">
-                      <p>21</p>
-                    </div>
-                    <div class="tcp-table__information">
-                      <div class="tcp-table__available">
-                        <p>not available</p>
+                      <div class="tcp-table__row">
+                        <div class="tcp-table__port">
+                          <p>21</p>
+                        </div>
+                        <div class="tcp-table__information">
+                          <div class="tcp-table__available">
+                            <p>not available</p>
+                          </div>
+                          <div class="tcp-table__description">
+                            <p>Lorem Ipsum is simply dummy text.</p>
+                          </div>
+                        </div>
                       </div>
-                      <div class="tcp-table__description">
-                        <p>Lorem Ipsum is simply dummy text.</p>
+                      <div class="tcp-table__row">
+                        <div class="tcp-table__port">
+                          <p>21</p>
+                        </div>
+                        <div class="tcp-table__information">
+                          <div class="tcp-table__available">
+                            <p>not available</p>
+                          </div>
+                          <div class="tcp-table__description">
+                            <p>Lorem Ipsum is simply dummy text.</p>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  <div class="tcp-table__row">
-                    <div class="tcp-table__port">
-                      <p>21</p>
-                    </div>
-                    <div class="tcp-table__information">
-                      <div class="tcp-table__available">
-                        <p>not available</p>
-                      </div>
-                      <div class="tcp-table__description">
-                        <p>Lorem Ipsum is simply dummy text.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tcp-table__row">
-                    <div class="tcp-table__port">
-                      <p>21</p>
-                    </div>
-                    <div class="tcp-table__information">
-                      <div class="tcp-table__available">
-                        <p>not available</p>
-                      </div>
-                      <div class="tcp-table__description">
-                        <p>Lorem Ipsum is simply dummy text.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tcp-table__row">
-                    <div class="tcp-table__port">
-                      <p>21</p>
-                    </div>
-                    <div class="tcp-table__information">
-                      <div class="tcp-table__available">
-                        <p>not available</p>
-                      </div>
-                      <div class="tcp-table__description">
-                        <p>Lorem Ipsum is simply dummy text.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tcp-table__row">
-                    <div class="tcp-table__port">
-                      <p>21</p>
-                    </div>
-                    <div class="tcp-table__information">
-                      <div class="tcp-table__available">
-                        <p>not available</p>
-                      </div>
-                      <div class="tcp-table__description">
-                        <p>Lorem Ipsum is simply dummy text.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tcp-table__row">
-                    <div class="tcp-table__port">
-                      <p>21</p>
-                    </div>
-                    <div class="tcp-table__information">
-                      <div class="tcp-table__available">
-                        <p>not available</p>
-                      </div>
-                      <div class="tcp-table__description">
-                        <p>Lorem Ipsum is simply dummy text.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tcp-table__row">
-                    <div class="tcp-table__port">
-                      <p>21</p>
-                    </div>
-                    <div class="tcp-table__information">
-                      <div class="tcp-table__available">
-                        <p>not available</p>
-                      </div>
-                      <div class="tcp-table__description">
-                        <p>Lorem Ipsum is simply dummy text.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tcp-table__row">
-                    <div class="tcp-table__port">
-                      <p>21</p>
-                    </div>
-                    <div class="tcp-table__information">
-                      <div class="tcp-table__available">
-                        <p>not available</p>
-                      </div>
-                      <div class="tcp-table__description">
-                        <p>Lorem Ipsum is simply dummy text.</p>
+                      <div class="tcp-table__row">
+                        <div class="tcp-table__port">
+                          <p>21</p>
+                        </div>
+                        <div class="tcp-table__information">
+                          <div class="tcp-table__available">
+                            <p>not available</p>
+                          </div>
+                          <div class="tcp-table__description">
+                            <p>Lorem Ipsum is simply dummy text.</p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+              <div class="site-info__buttons">
+                <button class="button button-cancel site-info__close">Close</button>
+                <button class="button">Apple</button>
+              </div>
             </div>
-          </div>
-          <div class="site-info__buttons">
-            <button class="button button-cancel site-info__close">Close</button>
-            <button class="button">Apple</button>
-          </div>
-        </div>
+          </p-accordionTab>
+        </p-accordion>
       </div>
     </div>
   </div>

@@ -60,12 +60,17 @@
 <!--          </sup>-->
         </div>
         <div class="form__buttons">
-          <button class="button modal__show" type="submit" [disabled]="form.invalid">Register now</button>
+          <button class="button button-load modal__show" type="submit" [disabled]="form.invalid || loading">Register now
+            <div class="circle-loader" *ngIf="loading"><app-spinner></app-spinner></div>
+          </button>
         </div>
       </form>
     </div>
   </div>
-  <app-modals [id]="'registerFinish'" [mode]="'confirm'" [bodytext]="'Registration confirmation letter has been sent to your email'" [headertext]="'Confirm registration'"
-              (closeModalEvent)="closeRegisterForm()">
-  </app-modals>
 </div>
+<app-modal-confirm [id]="'registerFinish'"
+                   [mode]="'confirm'"
+                   [bodytext]="'Registration confirmation letter has been sent to your email'"
+                   [headertext]="'Confirm registration'"
+                   (closeModalEvent)="closeRegisterForm()">
+</app-modal-confirm>

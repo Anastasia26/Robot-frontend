@@ -24,7 +24,7 @@ import {Component, OnInit} from '@angular/core';
           <app-footer></app-footer>
       </div>
   `,
-  // styleUrls: ['./footer.component.scss']
+   styleUrls: ['./user.component.scss']
 })
 export class UserComponent implements OnInit {
 

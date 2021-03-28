@@ -48,7 +48,7 @@ export class CommentComponent implements OnInit {
         id: response.id,
         comments: response.comments,
       };
-        this.comment.comments.push(comment);
+      this.comment.comments.push(comment);
     });
   }
 

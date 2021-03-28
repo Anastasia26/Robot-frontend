@@ -1,0 +1,59 @@
+.p-treenode-content{
+  display: block!important;
+  outline: none;
+}
+.p-tree-toggler {
+  margin-right: 15px!important;
+  vertical-align: middle;
+  outline: none;
+}
+.p-tree-toggler-icon {
+  color: #FFFFFF!important;
+}
+.p-treenode:not(.p-treenode-leaf){
+  width: 100%;
+  border-top: 1px dashed hsla(0,0%,41.6%,.2);
+  -webkit-box-shadow: 0 -1px 1px rgb(18 18 18 / 10%);
+  box-shadow: 0 -1px 1px rgb(18 18 18 / 10%);
+}
+.p-treenode-children {
+  padding-left: 15px!important;
+}
+.p-treenode-label {
+  cursor: pointer !important;
+  font-style: normal!important;
+  font-weight: bold!important;
+  font-size: 18px!important;
+  line-height: 33px!important;
+  color: #FFFFFF!important;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.25)!important;
+}
+.p-tree-filter {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  outline: 0;
+  padding-left: 15px;
+  padding-right: 47px;
+  color: #fff;
+  font-size: 18px;
+  background: #3F3F3F;
+  box-shadow: 0 1px 4px rgb(140 140 140 / 25%);
+  border-radius: 10px;
+  position: relative;
+  z-index: 5;
+}
+.p-tree-filter-container {
+  height: 48px;
+  position: relative;
+}
+.p-tree-filter-icon {
+  position: absolute;
+  z-index: 10;
+  top: 9px;
+  right: 16px;
+}
+.p-tree-empty-message {
+  color: #fff;
+  font-size: 18px;
+}

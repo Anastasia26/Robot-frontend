@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {ClearAllFailureMessage, PasswordReset} from '../../store/actions/user.action';
+import {ClearAllFailureMessage, PasswordReset, UserActionTypes} from '../../store/actions/user.action';
 import {Store} from '@ngrx/store';
 import {UserState, selectUserState} from '../../store/state/user.state';
 import {Observable} from 'rxjs';
 import {MustMatch} from '../../helpers/must-match.validator';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Actions, ofType} from '@ngrx/effects';
+import {tap} from 'rxjs/operators';
 
 
 @Component({
@@ -20,8 +22,12 @@ export class ResetComponent implements OnInit {
   getState: Observable<any>;
   errorMessage: string | null;
   modalID: string = 'resetPasswordFinish';
-
-  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private store: Store<UserState>) {
+  private loading: boolean;
+  constructor(private formBuilder: FormBuilder,
+              private route: ActivatedRoute,
+              private router: Router,
+              private store: Store<UserState>,
+              private actions: Actions) {
     this.getState = this.store.select(selectUserState);
   }
 
@@ -39,6 +45,7 @@ export class ResetComponent implements OnInit {
   }
 
   submitPasswordReset(): any {
+    this.loading = true;
     this.route.params.subscribe(params => {
       this.uid = params['uid'];
       this.token = params['token'];
@@ -49,6 +56,10 @@ export class ResetComponent implements OnInit {
         re_new_password: this.form.value.confirmPass
       };
       this.store.dispatch(new PasswordReset(routeParams));
+      this.actions.pipe(ofType(UserActionTypes.ERRORS_FAILURE_MESSAGE))
+          .subscribe(() => {
+            this.loading = false;
+          });
     });
   }
 

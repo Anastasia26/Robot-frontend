@@ -1,13 +1,22 @@
-<ng-container *ngIf="mode == 'confirm'">
-<div class="modal modal-confirm">
-    <div class="modal__overlay modal__hide"></div>
-    <div class="modal-confirm__body">
-        <h2>{{headertext}}</h2>
-        <p>{{bodytext}}</p>
-        <div class="modal-confirm__buttons">
-            <button class="button">Resend email</button>
-            <button class="button modal__hide" (click)="close()">OK</button>
+<ng-container *ngIf="mode == 'modal-reset'">
+    <div class="modal modal-reset">
+        <div class="modal__overlay modal__hide"></div>
+        <div class="modal-reset__body">
+            <h2>{{headertext}}</h2>
+            <div class="modal-reset__content">
+                <p class="modal-reset__sub">{{domainsName}}</p>
+                <div *ngFor="let reset_items of resetInfo; index as i">
+                    <div class="modal-reset__row">
+                        <p>{{reset_items.name}}</p>
+                        <p-toggleButton class="button" [(ngModel)]="reset_items.status" (onChange)="ResetDomainName(reset_items.name, $event)" onLabel="Reset" offLabel="Add" [style]="{'width': '10em'}"></p-toggleButton>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-reset__buttons">
+                <button class="button button-cancel modal__hide" (click)="close()">Close</button>
+                <button class="button  modal__hide">Ok</button>
+            </div>
         </div>
     </div>
-</div>
 </ng-container>
+

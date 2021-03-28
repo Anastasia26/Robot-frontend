@@ -1,19 +1,2 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'assets/styles/style';
-.dashboard{
-  min-height: 100vh;
-  .wrapper{
-    max-width: 1850px;
-    padding: 0 15px;
-    min-width: 1024px;
-  }
-}
-
-body, html{
-  overflow-x: hidden;
-  font-family: 'PT Sans', Arial;
-  background: #3c3c3c;
-}
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -32,7 +32,9 @@
           </div>
         </div>
         <div class="form__buttons">
-          <button type="submit" class="button modal__show" [disabled]="form.invalid">Save</button>
+          <button type="submit" class="button button-load modal__show" [disabled]="form.invalid || loading">Save
+            <div class="circle-loader" *ngIf="loading"><app-spinner></app-spinner></div>
+          </button>
         </div>
       </form>
     </div>

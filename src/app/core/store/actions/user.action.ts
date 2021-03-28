@@ -17,7 +17,6 @@ export enum UserActionTypes {
     USERINFO = '[User] Get User Information from API',
     SAVEUSER = '[User] Save User Information',
     REFRESH_TOKEN = '[User] Refresh Token',
-    REFRESH_SUCCESS = '[User] Refresh Success',
 }
 
 export class Register implements Action {
@@ -94,29 +93,3 @@ export class RefreshToken implements Action {
     readonly type = UserActionTypes.REFRESH_TOKEN;
     constructor(public payload: any) {}
 }
-
-
-export class RefreshTokenSuccess implements Action {
-    readonly type = UserActionTypes.REFRESH_SUCCESS;
-    constructor(public payload: any) {}
-}
-
-
-export type All =
-    | Register
-    | RegisterSuccess
-    | Activation
-    | LogIn
-    | LogInSuccess
-    | LogOut
-    | PasswordRecovery
-    | PasswordRecoverySuccess
-    | PasswordReset
-    | PasswordResetSuccess
-    | ErrorsFailureFields
-    | ErrorsFailureMessage
-    | ClearAllFailureMessage
-    | UserInfo
-    | SaveUser
-    | RefreshToken
-    | RefreshTokenSuccess;

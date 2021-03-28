@@ -23,13 +23,18 @@
                         <img src="../../../../assets/images/captcha.jpg" alt=""/>
                     </div>
                     <div class="form__buttons">
-                        <button type="submit" class="button" [disabled]="form.invalid">Reset password</button>
+                        <button type="submit" class="button button-load" [disabled]="form.invalid || loading">Reset password
+                            <div class="circle-loader" *ngIf="loading"><app-spinner></app-spinner></div>
+                        </button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <app-modals [id]="'resetPassFinish'" [mode]="'confirm'" [bodytext]="'Reset password confirmation letter has been sent to your email'" [headertext]="'Reset password'"
-                (closeModalEvent)="closeResetPassword()">
-    </app-modals>
+    <app-modal-confirm [id]="'resetPassFinish'"
+                       [mode]="'confirm'"
+                       [bodytext]="'Reset password confirmation letter has been sent to your email'"
+                       [headertext]="'Reset password'"
+                       (closeModalEvent)="closeResetPassword()">
+    </app-modal-confirm>
 </div>

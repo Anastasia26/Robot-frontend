@@ -11,6 +11,14 @@ import { DeleteComponent } from './delete/delete.component';
 import { SettingsComponent } from './settings/settings.component';
 import { SearchSidebarComponent } from './search-sidebar/search-sidebar.component';
 import {SharedModule} from '../../shared/shared.module';
+import { AlertContactsComponent } from './settings/alert-contacts/alert-contacts.component';
+import { AccountProfileComponent } from './settings/account-profile/account-profile.component';
+import {UserDashboardService} from './services/user-dashboard.service';
+import {TreeModule} from 'primeng/tree';
+import {ButtonModule} from 'primeng/button';
+import {FormsModule} from '@angular/forms';
+import {AccordionModule} from 'primeng/accordion';
+import {InputSwitchModule} from 'primeng/inputswitch';
 
 
 
@@ -23,16 +31,24 @@ import {SharedModule} from '../../shared/shared.module';
     DeleteComponent,
     SettingsComponent,
     SearchSidebarComponent,
+    AlertContactsComponent,
+    AccountProfileComponent,
   ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    CoreModule,
-    RouterModule,
-    UserRoutingModule
-  ],
+    imports: [
+        CommonModule,
+        SharedModule,
+        CoreModule,
+        RouterModule,
+        UserRoutingModule,
+        TreeModule,
+        ButtonModule,
+        InputSwitchModule,
+        FormsModule,
+        AccordionModule,
+    ],
   exports: [
-    UserComponent
-  ]
+    UserComponent,
+  ],
+  providers: [UserDashboardService]
 })
 export class UserModule { }

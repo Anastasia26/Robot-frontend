@@ -13,11 +13,13 @@ import {ModalsService} from './services/modals.service';
 import { ToplineComponent } from './components/topline/topline.component';
 import {UserService} from './services/get-user.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatTreeModule} from '@angular/material/tree';
 
 import {CommentBoxComponent} from './components/article/comment-box/comment-box.component';
 import {CommentComponent} from './components/article/comment/comment.component';
 import {CommentsService} from './services/comments.service';
+import {ClickOutsideDirective} from './directives/clickOutside.directive';
+import {ToggleButtonModule} from 'primeng/togglebutton';
+import {ModalsModule} from './components/modals/modals.module';
 
 @NgModule({
   declarations: [
@@ -26,23 +28,26 @@ import {CommentsService} from './services/comments.service';
     ModalsComponent,
     ToplineComponent,
     CommentComponent,
-    CommentBoxComponent
+    CommentBoxComponent,
+    ClickOutsideDirective,
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     MainRoutingModule,
     NgxPaginationModule,
-    MatTreeModule,
     FormsModule,
+    ToggleButtonModule,
+    ModalsModule
   ],
   exports: [
+    ModalsModule,
     BlogListComponent,
-    ModalsComponent,
     ToplineComponent,
     NotFoundComponent,
     CommentBoxComponent,
-    CommentComponent
+    CommentComponent,
+    ClickOutsideDirective
   ],
   providers: [BlogListService, ArticleService, ModalsService, UserService, CommentsService]
 })

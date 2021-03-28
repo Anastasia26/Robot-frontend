@@ -1,3 +1,11 @@
+body, html{
+  overflow-x: hidden;
+  font-family: 'PT Sans', Arial;
+  background: #3c3c3c;
+}
+.p-button {
+  outline: none;
+}
 .button{
   max-width: 186px;
   display: flex;

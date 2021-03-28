@@ -30,7 +30,9 @@
           <sup *ngIf="errorMessage">{{errorMessage.detail}}</sup>
           <div class="form__buttons">
             <div class="form__left">
-              <button class="button" type="submit" [disabled]="form.invalid">Login</button>
+              <button class="button button-load" type="submit" [disabled]="form.invalid || loading">Login
+                <div class="circle-loader" *ngIf="loading"><app-spinner></app-spinner></div>
+              </button>
               <label  class="form__checkbox">
                 <input checked type="checkbox" name="type">
                 <a><span></span> <p>Remember me</p></a>
