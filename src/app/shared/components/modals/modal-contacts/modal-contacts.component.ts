@@ -45,7 +45,8 @@ export class ModalContactsComponent implements OnInit, OnDestroy {
     this.getState.subscribe((state) => {
       this.errorMessage = state.errorMessage;
     });
-    this.store.dispatch(new ClearAllFailureMessage());
+    this.errorMessage = null;
+    //this.store.dispatch(new ClearAllFailureMessage());
     this.element.style.display = 'none';
     // ensure id attribute exists
     if (!this.id) {
@@ -90,7 +91,7 @@ export class ModalContactsComponent implements OnInit, OnDestroy {
 
   createEmailAlertContact(): void {
     this.loading = true;
-    this.submitAlertContactEvent.emit(this.formEmail.value);
+    this.submitAlertContactEvent.emit(this.formEmail.value.email);
   }
 
 }

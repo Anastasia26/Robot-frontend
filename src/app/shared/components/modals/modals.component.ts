@@ -59,7 +59,6 @@ export class ModalsComponent implements OnInit, OnDestroy {
     this.getState = this.store.select(selectUserState);
     this.getState.subscribe((state) => {
       this.alertInfo = state.alertInfo;
-      console.log(state.alertInfo);
       this.errorMessage = state.errorMessage;
     });
     this.element = el.nativeElement;
@@ -133,7 +132,6 @@ export class ModalsComponent implements OnInit, OnDestroy {
   }
 
   ResetDomainName(name, e): any {
-    console.log(name, e.checked);
     var isName = name;
     var isChecked = e.checked;
   }

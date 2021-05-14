@@ -1,6 +1,6 @@
 <div class="header__main">
     <div class="wrapper">
-        <div class="header__logo">
+        <div [routerLink]="['/']" class="header__logo">
             <img src="../../../../assets/images/logo.svg" alt=""/>
         </div>
         <div class="header__upgrade">
@@ -8,8 +8,8 @@
             </button>
         </div>
         <div class="header__dash">
-            <a [routerLink]="['/user-dashboard']">Dashboard</a>
-            <a [routerLink]="['/settings']">My Settings</a>
+            <a [routerLink]="['/user-dashboard']" routerLinkActive="active">Dashboard</a>
+            <a [routerLink]="['/settings']" routerLinkActive="active">My Settings</a>
         </div>
     </div>
 </div>

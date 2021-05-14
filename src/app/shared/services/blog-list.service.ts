@@ -12,4 +12,8 @@ export class BlogListService {
     getPosts(): any {
         return this.http.get<Comment[]>(environment.apiEndpoint + `/blog/posts/?limit=5&offset=0`);
     }
+
+    getRecentPosts(): any {
+        return this.http.get<Comment[]>(environment.apiEndpoint + `/blog/recent-posts/?limit=5&offset=0`);
+    }
 }

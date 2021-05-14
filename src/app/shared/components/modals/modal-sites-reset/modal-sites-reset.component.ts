@@ -5,6 +5,7 @@ import {selectUserState, UserState} from '../../../../core/store/state/user.stat
 import {UserDashboardService} from '../../../../user/pages/services/user-dashboard.service';
 import {Actions} from '@ngrx/effects';
 import {Observable} from 'rxjs';
+import cloneDeep from 'lodash.clonedeep';
 import {ClearAllFailureMessage} from '../../../../core/store/actions/user.action';
 import {GetDomainsList, GetResetsList, ResetDomainsList} from '../../../../core/store/actions/user-info.action';
 
@@ -41,8 +42,7 @@ export class ModalSitesResetComponent implements OnInit, OnDestroy {
     this.element = el.nativeElement;
     this.getState = this.store.select(selectUserState);
     this.getState.subscribe((state) => {
-      this.resetInfo = JSON.parse(JSON.stringify(state.resetStatuses));
-      console.log( this.resetInfo);
+      this.resetInfo = cloneDeep(state.resetStatuses);
       this.errorMessage = state.errorMessage;
     });
   }
@@ -80,7 +80,6 @@ export class ModalSitesResetComponent implements OnInit, OnDestroy {
     this.loading = false;
     this.element.style.display = 'block';
     if (event) {
-      console.log(event);
       this.domainsName = event.domainLabel;
       this.domainId = event.domainId;
       this.store.dispatch(new GetResetsList(this.domainId));
@@ -96,26 +95,13 @@ export class ModalSitesResetComponent implements OnInit, OnDestroy {
     document.body.classList.remove('modal-open');
   }
 
-  ResetHttp(status): any {
-    this.http = status;
-  }
-  ResetHttps(status): any {
-    this.https = status;
-  }
-  ResetPing(status): any {
-    this.ping = status;
-  }
-  ResetSsl(status): any {
-    this.ssl = status;
-  }
 
-
-  ResetDomains(): any {
+  ResetDomains(http, https, ping, ssl): any {
     let resetInfo = {
-      'http':  this.http ? true : false,
-      'https': this.https ? true : false,
-      'ping': this.ping ? true : false,
-      'ssl': this.ssl ? true : false,
+      'http': http,
+      'https': https,
+      'ping': ping,
+      'ssl': ssl,
       "available_ports": []
     };
     this.store.dispatch(new ResetDomainsList( {data: resetInfo, id: this.domainId}));

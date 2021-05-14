@@ -3,6 +3,10 @@ body, html{
   font-family: 'PT Sans', Arial;
   background: #3c3c3c;
 }
+span.errors{
+  font-size: 18px;
+  color: #FF4848;
+}
 .p-button {
   outline: none;
 }
@@ -547,14 +551,14 @@ h2{
     background-repeat: no-repeat;
     box-shadow: -3px -3px 16px rgba(97, 97, 97, 0.5), 3px 3px 8px rgba(54, 54, 54, 0.5);
   }
-  &__graph.graph-green &__circle::before{
-    background-image: url("../../../assets/images/stats-green.svg");
+  &__graph.graph-home-green &__circle::before{
+   background-image: url("../../../assets/images/stats-green.svg");
   }
-  &__graph.graph-red &__circle::before{
-    background-image: url("../../../assets/images/stats-red.svg");
+  &__graph.graph-home-red &__circle::before{
+   background-image: url("../../../assets/images/stats-red.svg");
   }
-  &__graph.graph-blue &__circle::before{
-    background-image: url("../../../assets/images/stats-blue.svg");
+  &__graph.graph-home-blue &__circle::before{
+   background-image: url("../../../assets/images/stats-blue.svg");
   }
 }
 /*Homepage END*/
@@ -1004,7 +1008,7 @@ h2{
 .pagination {
   display: flex;
   justify-content: center;
-  padding-bottom: 80px;
+  padding-bottom: 30px;
   .ngx-pagination {
     .current {
       padding: 0.1875rem 0.625rem;
@@ -1032,10 +1036,10 @@ h2{
     text-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
     text-align: left;
   }
-  sup{
-    font-size: 18px;
-    color: #FF4848;
-  }
+  //sup{
+  //  font-size: 18px;
+  //  color: #FF4848;
+  //}
   label{
     margin: 0 0 5px;
     display: block;
@@ -1700,6 +1704,19 @@ h2{
     display: none
   }
 }
+.ngx-charts-outer {
+  margin-top: 20px;
+  margin-left: 10px;
+}
+.pie-grid .percent-label {
+  display: none;
+}
+text.label.ng-star-inserted {
+  display: none;
+}
+.chart_label {
+  position: absolute;
+}
 /*Select END*/
 
 .footer{
@@ -1751,6 +1768,9 @@ h2{
     a:hover{
       color: #fff;
     }
+  }
+  .active {
+    color: #fff;
   }
   &__icons{
     display: flex;

@@ -13,6 +13,7 @@
 .p-treenode:not(.p-treenode-leaf){
   width: 100%;
   border-top: 1px dashed hsla(0,0%,41.6%,.2);
+  border-bottom: 1px dashed hsla(0,0%,41.6%,.2);
   -webkit-box-shadow: 0 -1px 1px rgb(18 18 18 / 10%);
   box-shadow: 0 -1px 1px rgb(18 18 18 / 10%);
 }

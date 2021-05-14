@@ -16,9 +16,14 @@ import { AccountProfileComponent } from './settings/account-profile/account-prof
 import {UserDashboardService} from './services/user-dashboard.service';
 import {TreeModule} from 'primeng/tree';
 import {ButtonModule} from 'primeng/button';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AccordionModule} from 'primeng/accordion';
 import {InputSwitchModule} from 'primeng/inputswitch';
+import { SiteInfoComponent } from './user-dashboard/site-info/site-info.component';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
+import { QuickStatsComponent } from './user-dashboard/quick-stats/quick-stats.component';
+import {ToggleButtonModule} from "primeng/togglebutton";
+import {ToastModule} from "primeng/toast";
 
 
 
@@ -33,6 +38,8 @@ import {InputSwitchModule} from 'primeng/inputswitch';
     SearchSidebarComponent,
     AlertContactsComponent,
     AccountProfileComponent,
+    SiteInfoComponent,
+    QuickStatsComponent,
   ],
     imports: [
         CommonModule,
@@ -45,6 +52,10 @@ import {InputSwitchModule} from 'primeng/inputswitch';
         InputSwitchModule,
         FormsModule,
         AccordionModule,
+        NgxChartsModule,
+        ReactiveFormsModule,
+        ToggleButtonModule,
+        ToastModule
     ],
   exports: [
     UserComponent,

@@ -1,4 +1,4 @@
-import {Component, OnInit,} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserDashboardService} from '../../services/user-dashboard.service';
 import {ModalsService} from '../../../../shared/services/modals.service';
 import {Store} from '@ngrx/store';
@@ -7,32 +7,31 @@ import {Observable} from 'rxjs';
 import {
   GetAlertContacts,
   SendEditAlertContacts,
-  SendAlertContacts,
+  SendAlertContacts, СhangeAlertAction,
 } from '../../../../core/store/actions/user-info.action';
-import {AlertInfo} from '../../model/user-info.model';
-import {UserInfoEffects} from '../../../../core/store/effects/user-info.effects';
-import {Actions, ofType} from '@ngrx/effects';
+import cloneDeep from 'lodash.clonedeep';
+import {pluck} from "rxjs/operators";
 @Component({
   selector: 'app-alert-contacts',
   templateUrl: './alert-contacts.component.html',
   styleUrls: ['./alert-contacts.component.css']
 })
 export class AlertContactsComponent implements OnInit {
-  alertInfo: AlertInfo[] = [];
+  alertInfo: any;
   getState: Observable<any>;
   headerAlertText: string;
   btnAlertName: string;
-  editId: string;
   currentEmail: string;
-  private loading: boolean;
   constructor(private store: Store<UserState>,
-              private userInfoEffects: UserInfoEffects,
               private userDashboardService: UserDashboardService,
-              private modalsService: ModalsService,
-              private actions: Actions) {
-    this.getState = this.store.select(selectUserState);
-    this.getState.subscribe((state) => {
-      this.alertInfo = state.alertInfo;
+              private modalsService: ModalsService) {
+    this.getState = this.store.select(selectUserState).pipe(pluck('alertInfo'));
+    this.getState.subscribe((alert) => {
+      if (alert) {
+        if (Object.keys(alert).length !== 0) {
+            this.alertInfo = cloneDeep(alert);
+        }
+      }
     });
   }
 
@@ -46,23 +45,31 @@ export class AlertContactsComponent implements OnInit {
     this.modalsService.open('alertFinish');
   }
 
-  submitAlertContactData($event): any {
-    if (this.editId) {
+  submitAlertContactData(id, event, isActive): any {
+    if (id) {
       const routeParamsforEdit = {
-        id: this.editId.toString(),
-        email: $event,
+        id: id.toString(),
+        email: event,
+        is_active: isActive,
       };
       this.store.dispatch(new SendEditAlertContacts(routeParamsforEdit));
     } else {
-      this.store.dispatch(new SendAlertContacts($event));
+      this.store.dispatch(new SendAlertContacts(event));
     }
   }
 
-  openEditContactModal(id, email): any {
+  openEditContactModal(email): any {
     this.headerAlertText = 'Edit Alert Contact';
     this.btnAlertName = 'Edit Alert Contact';
-    this.editId = id;
     this.currentEmail = email;
     this.modalsService.open('alertFinish', email);
+  }
+  changeAlertAction(id, currentEmail, e): any {
+    const paramsForChangeAction = {
+      id: id.toString(),
+      email: currentEmail,
+      is_active: e.checked,
+    };
+    this.store.dispatch(new СhangeAlertAction(paramsForChangeAction));
   }
 }

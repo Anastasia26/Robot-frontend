@@ -96,6 +96,7 @@ export class ModalSitesComponent implements OnInit, OnDestroy {
     this.domainsID = null;
     this.selectedAlertInfoArray = [];
     this.domainsList = [];
+    this.domainsFlag = {};
     if (event) {
       this.currentContactTypeId = 1;
       this.domainsID = event.editId;
@@ -124,6 +125,7 @@ export class ModalSitesComponent implements OnInit, OnDestroy {
   // add domain's name in the list
   AddDomainName(index, name): any {
     this.domainsFlag[index] = !this.domainsFlag[index];
+    this.domainsArray.push(name);
     if (this.domainsFlag[index]) {
       this.domainsArray.push(name);
       this.errorMessage = '';
@@ -141,11 +143,9 @@ export class ModalSitesComponent implements OnInit, OnDestroy {
       this.selectedAlertInfoArray = this.selectedAlertInfoArray.filter(item => {
         return item !== id;
       });
-      console.log(this.selectedAlertInfoArray);
     } else {
       this.alertCategory[id] = true;
       this.selectedAlertInfoArray.push(id);
-      console.log(this.selectedAlertInfoArray);
     }
   }
 
@@ -160,11 +160,11 @@ export class ModalSitesComponent implements OnInit, OnDestroy {
         domains_subdomains: this.domainsArray,
         alert_contacts_ids: this.selectedAlertInfoArray
       };
-      this.store.dispatch(new CreateDomainsList(obj));
-      this.actions.pipe(ofType(UserInfoActionTypes.CREATE_DOMAINS_LIST),
-          tap(() => {
-            this.loading = false;
-          }));
+        this.store.dispatch(new CreateDomainsList(obj));
+        this.actions.pipe(ofType(UserInfoActionTypes.CREATE_DOMAINS_LIST),
+            tap(() => {
+              this.loading = false;
+            }));
+      }
     }
-  }
 }

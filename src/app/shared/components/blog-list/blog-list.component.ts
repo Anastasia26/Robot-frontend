@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {BlogListService} from '../../services/blog-list.service';
+import {Store} from '@ngrx/store';
+import {selectUserState, UserState} from '../../../core/store/state/user.state';
+import {GetBlogPosts} from '../../../core/store/actions/user-info.action';
+import {Observable} from "rxjs";
 
 interface Posts {
   id: number;
@@ -17,18 +20,20 @@ interface Posts {
 @Component({
   selector: 'app-blog-list',
   templateUrl: './blog-list.component.html',
-  styleUrls: ['./blog-list.component.css']
+  styleUrls: ['./blog-list.component.scss']
 })
 export class BlogListComponent implements OnInit {
-  posts: Posts[] = [];
   p = 1;
-
-  constructor(private blogListService: BlogListService) { }
+  getState: Observable<any>;
+  posts: Posts[] = [];
+  constructor(private store: Store<UserState>) {
+    this.getState = this.store.select(selectUserState);
+    this.getState.subscribe((state) => {
+      this.posts = state.blogPosts.results;
+    });
+  }
 
   ngOnInit(): void {
-    this.blogListService.getPosts()
-        .subscribe((posts: Posts[]) => {
-          this.posts = posts;
-    });
+    this.store.dispatch(new GetBlogPosts());
   }
 }

@@ -22,8 +22,7 @@
       <p class="sites__edit" (click)="openEditSitesForm()"><img src="./../../../../assets/images/pen.png" alt=""/>Edit</p>
       <p class="sites__delete" (click)="OpenDeleteMenu($event)"><img src="./../../../../assets/images/basket.png" alt=""/>Delete</p>
       <p class="sites__reset modal-reset-show" (click)="OpenResetMenu()"><img src="./../../../../assets/images/reset.png" alt=""/>Reset Stats</p>
-      <div class="sites__captcha"
-           [style.visibility]="menuDeletePosition.visibility">
+      <div class="sites__captcha" [style.visibility]="menuDeletePosition.visibility">
         <div class="sites__digits">
           <h3>{{numberForDelete}}+{{anotherNumberForDelete}}=</h3>
           <input [(ngModel)]="rusultNum" class="resultSum" type="text"/>

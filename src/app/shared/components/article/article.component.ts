@@ -8,6 +8,7 @@ import {Article} from '../../models/article.model';
 import {CommentsService} from '../../services/comments.service';
 import {Comment} from '../../models/comment.model';
 import {User} from '../../../core/models/user.model';
+import {GetRecentBlogPosts} from "../../../core/store/actions/user-info.action";
 
 @Component({
   selector: 'app-article',
@@ -22,11 +23,13 @@ export class ArticleComponent implements OnInit {
   article: Article[] = [];
   comments: Comment[] = [];
   user: User;
+  recentPosts: [];
   constructor(private store: Store<UserState>, private articleService: ArticleService, private route: ActivatedRoute, private commentService: CommentsService) {
     this.getState = this.store.select(selectUserState);
     this.getState.subscribe((state) => {
       this.user = state.user;
       this.isAuthenticated = state.isAuthenticated;
+      this.recentPosts = state.blogPosts.recentPosts;
     });
   }
 
@@ -48,6 +51,7 @@ export class ArticleComponent implements OnInit {
     if (this.fragment) {
       //document.querySelector('#' + this.fragment).scrollIntoView({behavior: 'smooth'});
     }
+    this.store.dispatch(new GetRecentBlogPosts());
   }
 
   sendComment($event) {

@@ -1,24 +1,30 @@
-<div class="blog" *ngFor="let post of posts | paginate: { itemsPerPage: 4, currentPage: p }" >
-  <div class="blog__item">
-    <div class="wrapper">
-      <p class="blog__top">ANNOUNCEMENTS</p>
-      <a [routerLink]="['/article', post.id]"><h2>{{post.title}}</h2></a>
-      <div class="blog__info">
-        <p class="blog__author"><img alt="" src="../../../../assets/images/author.png"/> By <a href="">{{post.publisher_name}}</a></p>
-        <p class="blog__date"><img alt="" src="../../../../assets/images/date.png"/> Post date <a href="">{{post.created | date:'longDate'}}</a></p>
-        <p class="blog__comment"><img alt="" src="../../../../assets/images/comment.png"/> <a [routerLink]="['/article', post.id]">{{post.comments_qtty}} Comments</a></p>
-      </div>
-      <div class="blog__text">
-        <p>{{post.content}}<span>[…]</span></p>
-      </div>
-      <div class="blog__bottom">
-        <p class="blog__theme"><img src="../../../../assets/images/theme.png" alt=""/> <a href="">{{post.tags}}</a></p>
-        <a [routerLink]="['/article', post.id]" fragment="comment" class="button blog__button">Leave a comment</a>
+<ng-container *ngIf="posts?.length > 0; else emptyPosts">
+  <div class="blog" *ngFor="let post of posts | paginate: { itemsPerPage: 4, currentPage: p }" >
+    <div class="blog__item">
+      <div class="wrapper">
+        <p class="blog__top">ANNOUNCEMENTS</p>
+        <a [routerLink]="['/article', post.id]"><h2>{{post.title}}</h2></a>
+        <div class="blog__info">
+          <p class="blog__author"><img alt="" src="../../../../assets/images/author.png"/> By <a href="">{{post.publisher_name}}</a></p>
+          <p class="blog__date"><img alt="" src="../../../../assets/images/date.png"/> Post date <a href="">{{post.created | date:'longDate'}}</a></p>
+          <p class="blog__comment"><img alt="" src="../../../../assets/images/comment.png"/> <a [routerLink]="['/article', post.id]">{{post.comments_qtty}} Comments</a></p>
+        </div>
+        <div class="blog__text">
+          <p>{{post.content}}<span>…</span></p>
+        </div>
+        <div class="blog__bottom">
+          <p class="blog__theme"><img src="../../../../assets/images/theme.png" alt=""/> <a href="">{{post.tags}}</a></p>
+          <a [routerLink]="['/article', post.id]" fragment="comment" class="button blog__button">Leave a comment</a>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<div class="pagination">
-  <pagination-controls (pageChange)="p = $event"></pagination-controls>
-</div>
+  <div class="pagination">
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
+</ng-container>
+<ng-template #emptyPosts>
+  <p class="emptyPosts">No posts</p>
+</ng-template>
+
 

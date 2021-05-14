@@ -21,22 +21,25 @@
             </div>
             <div class="settings__right">
                 <p class="settings__action">
-                    <button class="settings__edit" (click)="openEditContactModal(alert_contact['id'], alert_contact['email'])">
+                    <button class="settings__edit" (click)="openEditContactModal(alert_contact['email'])">
                         <img alt="" src="../../../../../assets/images/pen-blue.png"/>
                     </button>
-                    <button class="settings__pause">
-                        <img alt="" src="../../../../../assets/images/pause.png"/>
-                    </button>
+                    <p-toggleButton (onChange)="changeAlertAction(alert_contact['id'], alert_contact['email'], $event)"
+                                    [(ngModel)]="alert_contact.is_active"
+                                    onIcon="pi pi-pause"
+                                    offIcon="pi pi-play">
+                    </p-toggleButton>
                 </p>
             </div>
+            <app-modal-contacts [id]="'alertFinish'"
+                                [mode]="'alert-contacts'"
+                                [headertext]="headerAlertText"
+                                [btnalertName]="btnAlertName"
+                                [bodytext]="'Alert Contact Information'"
+                                (submitAlertContactEvent)="submitAlertContactData(alert_contact['id'], $event, alert_contact['is_active'])">
+            </app-modal-contacts>
         </div>
     </div>
-    <app-modal-contacts [id]="'alertFinish'"
-                [mode]="'alert-contacts'"
-                [headertext]="headerAlertText"
-                [btnalertName]="btnAlertName"
-                [bodytext]="'Alert Contact Information'"
-                (submitAlertContactEvent)="submitAlertContactData($event)">
-    </app-modal-contacts>
+
 </div>
 

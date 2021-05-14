@@ -7,23 +7,23 @@
       <div class="footer__links">
         <div class="footer__item">
           <h3>About</h3>
-          <a [routerLink]="['/about']">About</a>
-          <a [routerLink]="['/blog']">Blog</a>
-          <a [routerLink]="['/privacy']">Privacy Policy/Terms</a>
+          <a [routerLink]="['/about']" routerLinkActive="active">About</a>
+          <a [routerLink]="['/blog']" routerLinkActive="active">Blog</a>
+          <a [routerLink]="['/privacy']" routerLinkActive="active">Privacy Policy/Terms</a>
         </div>
         <div class="footer__item">
           <h3>Monitoring</h3>
-          <a [routerLink]="['/locations']">Locations & IPs</a>
-          <a [routerLink]="['/pricing']">Pricing</a>
+          <a [routerLink]="['/locations']" routerLinkActive="active">Locations & IPs</a>
+          <a [routerLink]="['/pricing']" routerLinkActive="active">Pricing</a>
         </div>
         <div class="footer__item">
           <h3>Support</h3>
-          <a [routerLink]="['/faq']">FAQ</a>
-          <a [routerLink]="['/support']">Contact Us</a>
+          <a [routerLink]="['/faq']" routerLinkActive="active">FAQ</a>
+          <a [routerLink]="['/support']" routerLinkActive="active">Contact Us</a>
         </div>
       </div>
       <div class="footer__socials">
-        <a class="footer__button button" href="">Start Monitoring (In 30 secs)</a>
+        <a class="footer__button button" [routerLink]="['/login']">Start Monitoring (In 30 secs)</a>
         <div class="footer__icons">
           <a href="https://facebook.com"><img src="../../../../assets/images/facebook.png" alt=""/></a>
           <a href="https://twitter.com"><img src="../../../../assets/images/twitter.png" alt=""/></a>

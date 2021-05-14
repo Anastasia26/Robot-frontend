@@ -48,7 +48,6 @@ export class RegistrationComponent implements OnInit {
     this.store.dispatch(new Register(payload));
     this.actions.pipe(ofType(UserActionTypes.ERRORS_FAILURE_MESSAGE), ofType(UserActionTypes.REGISTER_SUCCESS))
         .subscribe((data: any) => {
-        console.log(data);
         this.loading = false;
     });
   }

@@ -1,0 +1,74 @@
+<div class="account__item quick">
+    <label class="account__switch switch" *ngIf="checkQuickStats">
+        <input type="checkbox" (change)="changeQuickStats(checkQuickStats['use_quick_stats'])" [(ngModel)]="checkQuickStats.use_quick_stats">
+        <span class="switch__slider">
+                        </span>
+        <span class="switch__red">Off</span>
+        <span class="switch__green">On</span>
+    </label>
+    <div class="quick__content">
+        <div class="quick__top">
+            <h2><img src="../../../../../assets/images/stats.svg" alt=""/> Quick Stats</h2>
+        </div>
+        <p class="quick__sub">You are currently using {{quickStatsDetails?quickStatsDetails.used_monitors:0}} of your {{quickStatsDetails?quickStatsDetails.max_monitors:0}} monitors.</p>
+        <div class="quick__statistics statistics">
+            <div class="statistics__content">
+                <div class="statistics__graphs">
+                    <div class="statistics__graph graph-green">
+                        <h3><span></span>Up monitors</h3>
+                        <div class="statistics__circle">
+                            <div class="chart_label">{{quickStatsDetails ? quickStatsDetails.up_monitors : 0}}</div>
+                            <ngx-charts-pie-grid
+                                    [view]="[220, 220]"
+                                    [scheme]="{domain: ['#01B309']}"
+                                    [designatedTotal]="quickStatsDetails ? quickStatsDetails.max_monitors : 0"
+                                    [results]="quickStatsDetails ? [{'name':'','value': quickStatsDetails ? quickStatsDetails.up_monitors : 0}] : [{'name':'1','value': 0}]"
+                                    [tooltipDisabled]="true">
+                            </ngx-charts-pie-grid>
+                        </div>
+                    </div>
+                    <div class="statistics__graph graph-red">
+                        <h3><span></span>Down monitors</h3>
+                        <div class="statistics__circle">
+                            <div class="chart_label">{{quickStatsDetails ? quickStatsDetails.down_monitors : 0}}</div>
+                            <ngx-charts-pie-grid
+                                    [view]="[220, 220]"
+                                    [scheme]="{domain: ['#FF4848']}"
+                                    [designatedTotal]="quickStatsDetails ? quickStatsDetails.max_monitors : 0"
+                                    [results]="quickStatsDetails ? [{'name':'','value': quickStatsDetails ? quickStatsDetails.down_monitors : 0}] : [{'name':'1','value': 0}]"
+                                    [tooltipDisabled]="true">
+                            </ngx-charts-pie-grid>
+                        </div>
+                    </div>
+                    <div class="statistics__graph graph-blue">
+                        <h3><span></span>Paused monitors</h3>
+                        <div class="statistics__circle">
+                            <div class="chart_label">{{quickStatsDetails?quickStatsDetails.paused_monitors : 0}}</div>
+                            <ngx-charts-pie-grid
+                                    [view]="[220, 220]"
+                                    [scheme]="{domain: ['#4C70CD']}"
+                                    [designatedTotal]="quickStatsDetails ? quickStatsDetails.max_monitors : 0"
+                                    [results]="quickStatsDetails ? [{'name':'','value': quickStatsDetails?quickStatsDetails.paused_monitors:0}] : [{'name':'1','value': 0}]"
+                                    [tooltipDisabled]="true">
+                            </ngx-charts-pie-grid>
+                        </div>
+                    </div>
+                </div>
+                <div class="statistics__numbers">
+                    <div class="statistics__item statistics__uptime">
+                        <h3><img src="../../../../../assets/images/uptime.svg" alt=""/>Overall uptime</h3>
+                        <div class="statistics__hours">
+                            <img src="../../../../../assets/images/star.svg" alt=""/>
+                            <span>{{quickStatsDetails ? quickStatsDetails.overall_uptime : 0}}%</span>
+                            (last 24 hours)
+                        </div>
+                    </div>
+                    <div class="statistics__item statistics__downtime">
+                        <h3>Latest downtime</h3>
+                        <p>{{quickStatsDetails ? quickStatsDetails.latest_downtime : null}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -14,22 +14,33 @@
 </div>
 <div class="form settings__personal">
     <h3>Personal</h3>
-    <form>
+    <form [formGroup]="form" (ngSubmit)="submitUserForm()">
         <div class="settings__personal-field">
-            <p>First-Last Name <sup>*</sup></p>
-            <input type="text" placeholder="User"/>
+            <div>
+                <p>First-Last Name <sup>*</sup></p>
+                <input type="text" formControlName="name" name="name" placeholder="User"/>
+            </div>
+            <span class="personal-field__err errors" *ngIf="form.get('name').invalid && form.get('name').touched">
+                <span *ngIf="form.get('name')['errors']['required']">The name is required!</span>
+                <span *ngIf="form.get('name')['errors']['minlength'] && form.get('name')['errors']['minlength']['requiredLength']">
+                    The name must be longer than {{form.get('name')['errors']['minlength']['requiredLength']}}
+                    characters! Now {{form.get('name')['errors']['minlength']['actualLength']}}</span>
+            </span>
         </div>
         <div class="settings__personal-field">
-            <p>Timezone</p>
-            <div class="select settings__select">
-                <img src="../../../../../assets/images/down.svg" alt="">
-                <select>
-                    <option value="0">Sao Paulo (GMT -03:00:00)</option>
-                    <option value="1">Sao Paulo (GMT -03:00:00)</option>
-                    <option value="2">Sao Paulo (GMT -03:00:00)</option>
-                    <option value="3">Sao Paulo (GMT -03:00:00)</option>
-                </select>
+            <div>
+                <p>Timezone</p>
+                <div class="user-select">
+                    <img src="../../../../../assets/images/down.svg" alt="">
+                    <select formControlName="timezone" class="select settings__select" [(ngModel)]="selectedTimezone"
+                            name="timezone">
+                        <option *ngFor="let zone of timezone" [selected]="zone" [ngValue]="zone">{{zone.name}}</option>
+                    </select>
+                </div>
             </div>
+            <span class="errors" *ngIf="form.get('timezone').invalid && form.get('timezone').touched">
+                    <span *ngIf="form.get('timezone')['errors']['required']">The timezone is required!</span>
+            </span>
         </div>
         <label class="form__checkbox settings__checkbox">
             <input checked type="checkbox" name="type">
@@ -44,43 +55,116 @@
         <p class="settings__note">Note: important updates that can effect your usage of the service will still be
             delivered.</p>
         <div class="settings__submit">
-            <button class="button settings__button">Upgrade</button>
+            <button class="button settings__button" [disabled]="form.invalid || loading">Upgrade
+                <div class="circle-loader" *ngIf="loading"><app-spinner></app-spinner></div>
+            </button>
         </div>
     </form>
 </div>
 <div class="form settings__password">
     <h3>Password <span>(not required if you won't be updating the password)</span></h3>
-    <form>
-        <div class="settings__password-field">
-            <p>Current Password <sup>*</sup></p>
-            <input type="text"/>
+    <form [formGroup]="resetPassForm" (ngSubmit)="submitPasswordReset()">
+        <div class="settings__password-field" [ngClass]="{'has-error': resetPassForm.get('currentPass').invalid && resetPassForm.get('currentPass').touched}">
+            <div>
+                <p>Current Password <sup>*</sup></p>
+                <input type="password" formControlName="currentPass" name="currentPass"/>
+            </div>
+            <span class="errors" *ngIf="resetPassForm.get('currentPass').invalid && resetPassForm.get('currentPass').touched">
+                <span *ngIf="resetPassForm.get('currentPass')['errors']['required']">Password is required!</span>
+                <span *ngIf="resetPassForm.get('currentPass')['errors']['minlength'] && resetPassForm.get('currentPass')['errors']['minlength']['requiredLength']">
+              The password must be more than {{resetPassForm.get('currentPass')['errors']['minlength']['requiredLength']}}
+                    characters! Now {{resetPassForm.get('currentPass')['errors']['minlength']['actualLength']}}</span>
+            </span>
+            <span class="errors" *ngIf="errorMessage">{{errorMessage.current_password}}</span>
         </div>
-        <div class="settings__password-field">
-            <p>New Password <sup>*</sup></p>
-            <input type="text"/>
+        <div class="settings__password-field" [ngClass]="{'has-error': resetPassForm.get('password').invalid && resetPassForm.get('password').touched}">
+            <div>
+                <p>New Password <sup>*</sup></p>
+                <input type="password" formControlName="password" name="password"/>
+            </div>
+            <span class="errors" *ngIf="resetPassForm.get('password').invalid && resetPassForm.get('password').touched">
+                <span *ngIf="resetPassForm.get('password')['errors']['required']">Password is required!</span>
+                <span *ngIf="resetPassForm.get('password')['errors']['minlength'] && resetPassForm.get('password')['errors']['minlength']['requiredLength']">
+              The password must be more than {{resetPassForm.get('password')['errors']['minlength']['requiredLength']}}
+                    characters! Now {{resetPassForm.get('password')['errors']['minlength']['actualLength']}}</span>
+            </span>
+            <span class="errors" *ngIf="errorMessage">{{errorMessage.new_password}}</span>
         </div>
-        <div class="settings__password-field">
-            <p>Repeat New Password <sup>*</sup></p>
-            <input type="text"/>
+        <div class="settings__password-field" [ngClass]="{'has-error': resetPassForm.get('confirmPass').invalid && resetPassForm.get('confirmPass').touched}">
+            <div>
+                <p>Repeat New Password <sup>*</sup></p>
+                <input type="password" formControlName="confirmPass" name="confirmPass"/>
+            </div>
+            <span class="errors" *ngIf="resetPassForm.get('confirmPass').invalid && resetPassForm.get('confirmPass').touched">
+                <span *ngIf="resetPassForm.get('confirmPass')['errors']['required']">Confirm Password is required!</span>
+                <span *ngIf="resetPassForm.get('confirmPass')['errors']['mustMatch']">Passwords must match</span>
+            </span>
+            <span class="errors" *ngIf="errorMessage">{{errorMessage.re_new_password}}</span>
         </div>
         <div class="settings__submit">
-            <button class="button settings__button">Upgrade</button>
+            <button type="submit" class="button settings__button" [disabled]="resetPassForm.invalid || pass_loading">Upgrade
+                <div class="circle-loader" *ngIf="pass_loading"><app-spinner></app-spinner></div>
+            </button>
         </div>
     </form>
 </div>
-<div class="settings__text">
+<div class="form settings__password">
     <h3>E-mail</h3>
-    <p class="settings__dotted">
-        Your e-mail at Uptime Robot is user12343@gmail.com. <a href="">I want to change it.</a>
+    <p class="settings__dotted" *ngIf="userInfo">
+        Your e-mail at Uptime Robot is {{userInfo.email}}.
     </p>
+    <form [formGroup]="resetEmailForm" (ngSubmit)="submitEmailReset()">
+        <div class="settings__password-field" [ngClass]="{'has-error': resetEmailForm.get('password').invalid && resetEmailForm.get('password').touched}">
+            <div>
+                <p>Current Password <sup>*</sup></p>
+                <input type="password" formControlName="password" name="password"/>
+            </div>
+            <span class="errors" *ngIf="resetEmailForm.get('password').invalid && resetEmailForm.get('password').touched">
+                <span *ngIf="resetEmailForm.get('password')['errors']['required']">Password is required!</span>
+                <span *ngIf="resetEmailForm.get('password')['errors']['minlength'] && resetEmailForm.get('password')['errors']['minlength']['requiredLength']">
+              The password must be more than {{resetEmailForm.get('password')['errors']['minlength']['requiredLength']}}
+                    characters! Now {{resetEmailForm.get('password')['errors']['minlength']['actualLength']}}</span>
+            </span>
+            <span class="errors" *ngIf="errorMessage">{{errorMessage.current_password}}</span>
+        </div>
+        <div class="settings__password-field" [ngClass]="{'has-error': resetEmailForm.get('email').invalid && resetEmailForm.get('email').touched}">
+            <div>
+                <p>New Email <sup>*</sup></p>
+                <input type="email" formControlName="email" name="email"/>
+            </div>
+            <span class="errors" *ngIf="resetEmailForm.get('email').invalid && resetEmailForm.get('email').touched">
+                <span *ngIf="resetEmailForm.get('email')['errors']['required']">Email is required!</span>
+                <span *ngIf="resetEmailForm.get('email')['errors']['minlength'] && resetEmailForm.get('email')['errors']['minlength']['requiredLength']">
+              The email must be more than {{resetEmailForm.get('email')['errors']['minlength']['requiredLength']}}
+                    characters! Now {{resetEmailForm.get('email')['errors']['minlength']['actualLength']}}</span>
+            </span>
+            <span class="errors" *ngIf="errorMessage">{{errorMessage.new_email}}</span>
+        </div>
+        <div class="settings__submit">
+            <button type="submit" class="button settings__button" [disabled]="resetEmailForm.invalid || email_loading">Upgrade
+                <div class="circle-loader" *ngIf="email_loading"><app-spinner></app-spinner></div>
+            </button>
+        </div>
+    </form>
 </div>
-<div class="settings__text">
+<div class="settings__text" (clickOutside)="hideMenu($event)">
     <h3>Delete Account</h3>
     <p class="settings__dotted">
         Uptime Robot sends an "account deletion verification e-mail" to the account e-mail. Once the verification link
         inside the e-mail is clicked, all account information at Uptime Robot (including the account, monitors, logs and
         settings will be lost and can not be recovered).
-        <a href="">I still want to delete the account.</a>
+        <a href="" class="user_delete" (click)="OpenDeleteMenu($event)">I still want to delete the account.</a>
     </p>
+    <div class="delete" [style.visibility]="menuDeletePosition.visibility">
+        <div class="delete__digits">
+            <h3>{{numberForDelete}}+{{anotherNumberForDelete}}=</h3>
+            <input [(ngModel)]="rusultNum" class="resultSum" type="text"/>
+        </div>
+        <div class="delete__button">
+            <button class="button" (click)="deleteUser(numberForDelete, anotherNumberForDelete, rusultNum, userInfo.id)"
+                    [disabled]="!rusultNum">Delete
+            </button>
+        </div>
+    </div>
 </div>
 

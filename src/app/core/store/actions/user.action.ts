@@ -16,7 +16,12 @@ export enum UserActionTypes {
     CLEAR_ERRORS_FAILURE_MESSAGE = '[User] Clear Message Failure',
     USERINFO = '[User] Get User Information from API',
     SAVEUSER = '[User] Save User Information',
+    CHANGE_USER_INFO = '[User] Change User Information',
     REFRESH_TOKEN = '[User] Refresh Token',
+    CHANGE_USER_PASSWORD = '[User] Change user password',
+    CHANGE_USER_EMAIL = '[User] Change user email',
+    CHANGE_USER_QUICK_STATUS = '[User] Change user quick status',
+    DELETE_USER = '[User] Delete user account',
 }
 
 export class Register implements Action {
@@ -68,11 +73,6 @@ export class PasswordResetSuccess implements Action {
     constructor(public payload: any) {}
 }
 
-export class ErrorsFailureFields implements Action {
-    readonly type = UserActionTypes.ERRORS_FAILURE_FIELDS;
-    constructor(public payload: any) {}
-}
-
 export class ErrorsFailureMessage implements Action {
     readonly type = UserActionTypes.ERRORS_FAILURE_MESSAGE;
     constructor(public payload: any) {}
@@ -88,8 +88,32 @@ export class SaveUser implements Action {
     readonly type = UserActionTypes.SAVEUSER;
     constructor(public payload: any) {}
 }
+export class ChangeUserInfo implements Action {
+    readonly type = UserActionTypes.CHANGE_USER_INFO;
+    constructor(public payload: any) {}
+}
 
 export class RefreshToken implements Action {
     readonly type = UserActionTypes.REFRESH_TOKEN;
+    constructor(public payload: any) {}
+}
+
+export class DashboardPasswordReset implements Action {
+    readonly type = UserActionTypes.CHANGE_USER_PASSWORD;
+    constructor(public payload: any) {}
+}
+
+export class DashboardEmailReset implements Action {
+    readonly type = UserActionTypes.CHANGE_USER_EMAIL;
+    constructor(public payload: any) {}
+}
+
+export class ChangeQuickStatus implements Action {
+    readonly type = UserActionTypes.CHANGE_USER_QUICK_STATUS;
+    constructor(public payload: any) {}
+}
+
+export class DeleteUser implements Action {
+    readonly type = UserActionTypes.DELETE_USER;
     constructor(public payload: any) {}
 }

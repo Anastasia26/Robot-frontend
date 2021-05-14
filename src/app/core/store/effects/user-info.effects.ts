@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import {interval, Observable, of} from 'rxjs';
-import {map, switchMap, catchError, exhaustMap, tap} from 'rxjs/operators';
-import {Store} from '@ngrx/store';
+import { Observable, of} from 'rxjs';
+import {map, switchMap, catchError, tap, debounceTime} from 'rxjs/operators';
 import {Utils} from '../../classes/utils';
 import {UserDashboardService} from '../../../user/pages/services/user-dashboard.service';
 import {ModalsService} from '../../../shared/services/modals.service';
-import {UserState} from '../state/user.state';
 import {
     UserInfoActionTypes,
     UpdateAlertContacts,
@@ -25,11 +23,22 @@ import {
     UpdateResetDomainsList,
     GetIpAddressesList,
     SaveIpAddressesList,
-    GetIpSettings,
-    UpdateIpSettings,
-    StartFastPortScan, GetFastScanId
+    GetMonitoringEvents,
+    SaveMonitoringEvents,
+    GetQuickStatsInfo,
+    SaveQuickStatsInfo,
+    SendMonitoringSettings,
+    UpdateMonitoringSettings,
+    StartPortScan,
+    SaveScanInfo,
+    AddAlertContacts,
+    ChangeMonitoringStatus,
+    SaveBlogPosts, SaveGetRecentBlogPosts, СhangeAlertAction, AddDomainsItem, SaveTimeZones
 } from '../actions/user-info.action';
-import {ErrorsFailureMessage, UserActionTypes} from '../actions/user.action';
+import {ErrorsFailureMessage} from '../actions/user.action';
+import {BlogListService} from '../../../shared/services/blog-list.service';
+import {Store} from '@ngrx/store';
+import {UserState} from '../state/user.state';
 
 
 @Injectable()
@@ -39,6 +48,7 @@ export class UserInfoEffects {
         private userDashboardService: UserDashboardService,
         private router: Router,
         private helperClass: Utils,
+        private blogListService: BlogListService,
         private modalsService: ModalsService,
         private store: Store<UserState>
     ) {}
@@ -52,17 +62,29 @@ export class UserInfoEffects {
     }));
     @Effect()
     SendAlertContacts: Observable<any> = this.actions.pipe(ofType(UserInfoActionTypes.SEND_ALERT_CONTACTS), map((action: SendAlertContacts) => action.payload), switchMap(payload => {
-        return this.userDashboardService.sendAlertContacts(payload.email).pipe(map(() => {
+        return this.userDashboardService.sendAlertContacts(payload.email).pipe(map((resp) => {
             this.modalsService.close('alertFinish');
+            return new AddAlertContacts(resp);
         }), catchError((err) => {
             return of(new ErrorsFailureMessage( err ));
         }));
     }));
     @Effect()
     SendEditAlertContacts: Observable<any> = this.actions.pipe(ofType(UserInfoActionTypes.SEND_EDIT_ALERT_CONTACTS), map((action: SendEditAlertContacts) => action.payload), switchMap(payload => {
-        return this.userDashboardService.sendEditAlertContacts(payload.id, payload.email).pipe(map(() => {
+        return this.userDashboardService.sendEditAlertContacts(payload).pipe(map(() => {
             this.modalsService.close('alertFinish');
             return new UpdateAlertContacts(payload);
+        }), catchError((err) => {
+            return of(new ErrorsFailureMessage( err ));
+        }));
+    }));
+    @Effect()
+    СhangeAlertAction: Observable<any> = this.actions.pipe(ofType(UserInfoActionTypes.CHANGE_ALERT_ACTION),
+        map((action: СhangeAlertAction) => action.payload),
+        debounceTime(1000),
+        switchMap(payload => {
+        return this.userDashboardService.sendEditAlertContacts(payload).pipe(map((resp) => {
+            return new UpdateAlertContacts(resp);
         }), catchError((err) => {
             return of(new ErrorsFailureMessage( err ));
         }));
@@ -71,7 +93,7 @@ export class UserInfoEffects {
     CreateDomainsList: Observable<any> = this.actions.pipe(ofType(UserInfoActionTypes.CREATE_DOMAINS_LIST), map((action: CreateDomainsList) => action.payload), switchMap(payload => {
         return this.userDashboardService.applyDomainsResult(payload.domains_subdomains, payload.alert_contacts_ids).pipe(map((resp) => {
             this.modalsService.close('modalsSites');
-            return new SaveDomainsList(resp.results);
+            return new AddDomainsItem(resp.results);
         }), catchError((err) => {
             return of(new ErrorsFailureMessage( err ));
         }));
@@ -101,7 +123,9 @@ export class UserInfoEffects {
         }));
     }));
     @Effect()
-    GetResetsList: Observable<any> = this.actions.pipe(ofType(UserInfoActionTypes.GET_RESETS_LIST), map((action: GetResetsList) => action.payload), switchMap(payload => {
+    GetResetsList: Observable<any> = this.actions.pipe(ofType(UserInfoActionTypes.GET_RESETS_LIST),
+        map((action: GetResetsList) => action.payload),
+        switchMap(payload => {
         return this.userDashboardService.getResetsList(payload).pipe(map((resp) => {
             return new SaveResetsList(resp);
         }), catchError((err) => {
@@ -118,52 +142,105 @@ export class UserInfoEffects {
         }));
     }));
     @Effect()
-    GetIpAddressesList: Observable<any> = this.actions.pipe(ofType(UserInfoActionTypes.GET_IP_ADDRESSES_LIST), map((action: GetIpAddressesList) => action.payload), switchMap(payload => {
+    GetIpAddressesList: Observable<any> = this.actions.pipe(ofType(UserInfoActionTypes.GET_IP_ADDRESSES_LIST), map((action: GetIpAddressesList) => action.payload),
+        switchMap(payload => {
         return this.userDashboardService.getIpAddressesList(payload).pipe(map((resp) => {
             return new SaveIpAddressesList(resp);
+        }), tap ((resp) => {
+            resp.payload.ip_addresses.forEach(
+                    (dInfo) => {
+                        if (resp.payload.perform_monitoring) {
+                            this.helperClass.GetIpInformation(dInfo.id);
+                        }
+                    });
+            }), catchError((err) => {
+            return of(new ErrorsFailureMessage( err ));
+        }));
+    }));
+    @Effect()
+    GetMonitoringEvents: Observable<any> = this.actions.pipe(ofType(UserInfoActionTypes.GET_MONITORING_EVENTS),
+        map((action: GetMonitoringEvents) => action),
+        switchMap(() => {
+            return this.userDashboardService.getMonitoringEvents().pipe(map((resp) => {
+                return new SaveMonitoringEvents(resp);
+            }), catchError((err) => {
+                return of(new ErrorsFailureMessage( err ));
+            }));
+        }));
+    @Effect()
+    GetQuickStatsInfo: Observable<any> = this.actions.pipe(ofType(UserInfoActionTypes.GET_QUICK_STATS_INFO),
+        map((action: GetQuickStatsInfo) => action),
+        switchMap(() => {
+        return this.userDashboardService.getQuickStatsData().pipe(map((resp) => {
+            return new SaveQuickStatsInfo(resp);
         }), catchError((err) => {
             return of(new ErrorsFailureMessage( err ));
         }));
     }));
     @Effect()
-    GetIpSettings: Observable<any> = this.actions.pipe(ofType(UserInfoActionTypes.GET_IP_SETTINGS), map((action: GetIpSettings) => action.payload), switchMap(payload => {
-        console.log(payload);
-        return this.userDashboardService.getIpSettings(payload).pipe(map((resp) => {
-            const source = interval(1000);
-            const subscribe = source.subscribe(val => console.log(resp));
-            //console.log(resp);
-            return new UpdateIpSettings(resp);
+    SendMonitoringSettings: Observable<any> = this.actions.pipe(ofType(UserInfoActionTypes.SEND_MONITORING_SETTINGS),
+        map((action: SendMonitoringSettings) => action.payload),
+        debounceTime(1000),
+        switchMap(payload => {
+        return this.userDashboardService.sendMonitoringSettings(payload.id, payload.data).pipe(map((resp) => {
+            return new UpdateMonitoringSettings({id: payload.id, mData: resp});
         }), catchError((err) => {
             return of(new ErrorsFailureMessage( err ));
         }));
     }));
     @Effect()
-    StartFastPortScan: Observable<any> = this.actions.pipe(ofType(UserInfoActionTypes.START_FAST_PORT_SCAN), map((action: StartFastPortScan) => action.payload), switchMap(payload => {
-        return this.userDashboardService.startFastPortScan(payload).pipe(map((resp) => {
-            let data = resp;
-            console.log(data);
-            exhaustMap(action => interval(10000).pipe(
-                 map(() => {console.log(data); } ),
-            ));
-            return new GetFastScanId(resp);
+    StartFastPortScan: Observable<any> = this.actions.pipe(ofType(UserInfoActionTypes.START_PORT_SCAN),
+        map((action: StartPortScan) => action.payload),
+        switchMap(payload => {
+            return this.userDashboardService.startPortScan(payload).pipe(map((resp) => {
+                 return new SaveScanInfo({id: resp.ip_id, mode: payload.mode});
+            }), catchError((err) => {
+                return of(new ErrorsFailureMessage( err ));
+            }));
+        }));
+    @Effect()
+    ChangeMonitoringStatus: Observable<any> = this.actions.pipe(ofType(UserInfoActionTypes.CHANGE_MONITORING_STATUS),
+        map((action: ChangeMonitoringStatus) => action.payload),
+        debounceTime(1000),
+        switchMap(payload => {
+            return this.userDashboardService.changeMonitoringStatus(payload.id, payload.perform_monitoring).pipe(map((resp) => {
+                return new SaveIpAddressesList(resp);
+            }), tap ((resp) => {
+                this.store.dispatch(new GetQuickStatsInfo());
+                if (resp.payload.perform_monitoring) {
+                    resp.payload.ip_addresses.forEach(
+                        (dInfo) => {
+                            this.helperClass.GetIpInformation(dInfo.id);
+                        });
+                }
+            }), catchError((err) => {
+                return of(new ErrorsFailureMessage( err ));
+            }));
+        }));
+    @Effect()
+    GetBlogPosts: Observable<any> = this.actions.pipe(ofType(UserInfoActionTypes.GET_BLOG_POSTS), switchMap(() => {
+        return this.blogListService.getPosts().pipe(map((resp) => {
+            return new SaveBlogPosts(resp);
         }), catchError((err) => {
             return of(new ErrorsFailureMessage( err ));
         }));
     }));
-    // @Effect({dispatch: false})
-    // GetFastScanId: Observable<any> = this.actions.pipe(
-    //     ofType(UserInfoActionTypes.GET_FAST_SCAN_ID),
-    //     tap((fast_port_scan_id) => {
-    //         console.log(fast_port_scan_id['payload']['fast_scan_id']);
-    //         exhaustMap(action => interval(10000).pipe(
-    //             // map(actions.everySecondAction()),
-    //         ));
-    //     }),
-    //     // takeUntil(this.actions.pipe(ofType(actions.stop))),
-    //     // repeat(),
-    //     catchError((err) => {
-    //         return of(new ErrorsFailureMessage( err ));
-    //     }));
+    @Effect()
+    GetRecentBlogPosts: Observable<any> = this.actions.pipe(ofType(UserInfoActionTypes.GET_RECENT_BLOG_POSTS), switchMap(() => {
+        return this.blogListService.getRecentPosts().pipe(map((resp) => {
+            return new SaveGetRecentBlogPosts(resp);
+        }), catchError((err) => {
+            return of(new ErrorsFailureMessage( err ));
+        }));
+    }));
+    @Effect()
+    GetTimeZones: Observable<any> = this.actions.pipe(ofType(UserInfoActionTypes.GET_TIMEZONES), switchMap(() => {
+        return this.userDashboardService.getTimeZonesList().pipe(map((resp) => {
+            return new SaveTimeZones(resp);
+        }), catchError((err) => {
+            return of(new ErrorsFailureMessage( err ));
+        }));
+    }));
 }
 
 

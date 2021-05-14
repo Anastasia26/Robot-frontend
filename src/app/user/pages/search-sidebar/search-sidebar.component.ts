@@ -41,11 +41,10 @@ export class SearchSidebarComponent implements OnInit {
   private loading: boolean;
   isMainDomain: boolean;
   @Output() clickChange: EventEmitter<number> = new EventEmitter();
-  constructor(private modalsService: ModalsService, private actions: Actions, private store: Store<UserState>) {
+  constructor(private modalsService: ModalsService, private userDashboardService: UserDashboardService, private actions: Actions, private store: Store<UserState>) {
     this.getState = this.store.select(selectUserState);
     this.getState.subscribe((state) => {
       this.domainsInfo = state.domainsInfo;
-      console.log(state.domainsInfo);
       const convertToString = JSON.stringify(this.domainsInfo);
       var replaced_keys = {
         'name' : 'label',
@@ -69,7 +68,7 @@ export class SearchSidebarComponent implements OnInit {
   }
 
   scrollToDomain(id, name): any {
-   // this.userDashboardService.scrollToDomainDetails({domain_id: id, domain_name: name});
+    this.userDashboardService.scrollToDomainDetails({domain_id: id, domain_name: name});
     this.store.dispatch(new GetIpAddressesList(id));
   }
 
@@ -96,10 +95,10 @@ export class SearchSidebarComponent implements OnInit {
     this.isMainDomain = is_main;
     this.domainName = label;
     e.preventDefault();
-    this.menuTopLeftPosition.x = e.screenX - 40 + 'px';
+    this.menuTopLeftPosition.x = e.clientX - 185 + 'px';
     this.menuTopLeftPosition.y = e.pageY + 15 + 'px';
     this.menuTopLeftPosition.visibility = 'visible !important';
-    this.openedMenuCoordinate = e.clientY;
+    this.openedMenuCoordinate = e.pageY;
   }
 
   OpenDeleteMenu(e): any {

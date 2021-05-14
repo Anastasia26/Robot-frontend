@@ -17,16 +17,6 @@ export class ErrorInterceptor implements HttpInterceptor {
             refresh: localStorage.getItem('refresh')
         };
         return next.handle(request).pipe(catchError(err => {
-            // console.log(request);
-            // console.log(err);
-            // if (err.status === 401) {
-            //     // auto refresh token if 401 response returned from api
-            //      //this.store.dispatch(new RefreshToken(params));
-            //
-            // } else {
-            //     this.store.dispatch(new LogOut());
-            // }
-           // this.store.dispatch(new ErrorsFailureMessage(err));
             return throwError(err);
         }));
     }

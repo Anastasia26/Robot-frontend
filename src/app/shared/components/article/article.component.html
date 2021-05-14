@@ -67,11 +67,15 @@
 <div class="recent">
     <div class="wrapper">
         <h2>Recent Posts</h2>
-        <div class="recent__links">
-            <a href="">Introducing Two-Factor Authentication (2FA)</a>
-            <a href="">New Feature: Heartbeat Monitoring (Pro Plan)</a>
-            <a href="">New Feature: Announcements for the Status Pages (Pro Plan)</a>
-            <a href="">New Feature – Read-Only Api-Key</a>
-        </div>
+        <ng-container *ngIf="recentPosts?.length > 0; else emptyPosts">
+            <div class="recent__links" *ngFor="let post of recentPosts">
+                <a [routerLink]="['/article', post.id]">{{post.title}}</a>
+            </div>
+        </ng-container>
+        <ng-template #emptyPosts>
+            <div class="recent__links">
+                <a>No posts</a>
+            </div>
+        </ng-template>
     </div>
 </div>

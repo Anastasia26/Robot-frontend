@@ -5,7 +5,7 @@
                 <a [routerLink]="['/login']" class="header__lk">
                     <img src="../../../../assets/images/personal.svg" alt=""/>
                 </a>
-                <a class="header__sign">
+                <a [routerLink]="['/user-dashboard']" class="header__sign">
                     {{user['user']['email']}}
                 </a>
                 <a (click)="logout()" class="header__logout">

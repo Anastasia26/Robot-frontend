@@ -21,23 +21,23 @@
                     </button>
                 </form>
                 <div [ngClass]="{'has-error': formDomains.get('domain').invalid && formDomains.get('domain').touched}">
-                    <sup *ngIf="formDomains.get('domain').invalid && formDomains.get('domain').touched">
-                        <span *ngIf="formDomains.get('domain')['errors']['required']">Domain's name is required!</span>
-                        <span *ngIf="formDomains.get('domain')['errors']['pattern']">Please enter a valid domain's name</span>
+                    <sup class="error" *ngIf="formDomains.get('domain').invalid && formDomains.get('domain').touched">
+                        <span class="error" *ngIf="formDomains.get('domain')['errors']['required']">Domain's name is required!</span>
+                        <span class="error" *ngIf="formDomains.get('domain')['errors']['pattern']">Please enter a valid domain's name</span>
                     </sup>
                     <sup *ngIf="errorMessage">
-                        <span *ngIf="errorMessage['domain']">{{errorMessage['domain']}}</span>
+                        <span class="error" *ngIf="errorMessage['domain']">{{errorMessage['domain']}}</span>
                     </sup>
                 </div>
             </div>
             <div class="modal-sites__content">
-                <div class="modal-sites__left">
+                <div class="modal-sites__left site-info-list">
                     <div class="modal-sites__row" *ngFor="let domain_name of domainsList; index as i">
                         <p>{{i+1}}. {{domain_name}}</p>
-                        <button class="button" (click)="AddDomainName(i, domain_name)">{{!domainsFlag[i] ? 'Add' : 'Remove'}}</button>
+                        <button class="button" (click)="AddDomainName(i, domain_name)">{{domainsFlag[i] ? 'Remove' : 'Add'}}</button>
                     </div>
-                    <sup *ngIf="errorMessage">
-                        <span *ngIf="errorMessage">{{errorMessage}}</span>
+                    <sup class="error" *ngIf="errorMessage">
+                        <span class="error" *ngIf="errorMessage">{{errorMessage}}</span>
                     </sup>
                 </div>
                 <div class="modal-sites__right">
@@ -49,8 +49,8 @@
                                 <p>{{alert_contact['email']}}</p>
                             </label>
                         </div>
-                        <sup *ngIf="errorMessage">
-                            <span *ngIf="errorMessage['domain']">{{errorMessage['domain']}}</span>
+                        <sup class="error" *ngIf="errorMessage">
+                            <span class="error" *ngIf="errorMessage['domain']">{{errorMessage['domain']}}</span>
                         </sup>
                     </div>
                     <div class="modal-sites__other">

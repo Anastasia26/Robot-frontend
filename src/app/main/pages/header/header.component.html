@@ -5,12 +5,12 @@
           <img src="../../../../assets/images/logo.svg" alt=""/>
         </a>
       </div>
-      <div class="header__nav">
+      <div class="header__nav" (clickOutside)="hideMenu($event)">
         <div class="header__links">
-          <a [routerLink]="['/faq']">FAQ</a>
-          <a [routerLink]="['/about']">About</a>
-          <a [routerLink]="['/support']">Support</a>
-          <a [routerLink]="['/blog']">Blog</a>
+          <a [routerLink]="['/faq']" routerLinkActive="active">FAQ</a>
+          <a [routerLink]="['/about']" routerLinkActive="active">About</a>
+          <a [routerLink]="['/support']" routerLinkActive="active">Support</a>
+          <a [routerLink]="['/blog']" routerLinkActive="active">Blog</a>
         </div>
         <div class="header__socials">
           <a href="https://facebook.com"><img src="../../../../assets/images/facebook.png" alt=""/></a>
@@ -18,7 +18,7 @@
           <a href=""><img src="../../../../assets/images/message.png" alt=""/></a>
         </div>
       </div>
-      <div style="display: none" class="header__nav-mobile" [@openClose]="isOpen ? true : false">
+      <div class="header__nav-mobile" [style.visibility]="menuTopLeftPosition.visibility">
         <a [routerLink]="['/faq']">FAQ</a>
         <a [routerLink]="['/about']">About</a>
         <a [routerLink]="['/support']">Support</a>
@@ -26,9 +26,9 @@
         <a [routerLink]="['/registration']">Sign-up</a>
         <a [routerLink]="['/login']">Login</a>
       </div>
-      <div class="header__burger inactive" (click)="openMobMenu()">
-        <span></span>
-      </div>
+        <div class="header__burger inactive menu-mobile" (click)="openMobMenu()">
+          <span class="menu-mobile"></span>
+        </div>
     </div>
   </div>
 

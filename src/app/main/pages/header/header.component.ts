@@ -1,28 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Directive, EventEmitter, OnInit, Output} from '@angular/core';
 import {state, trigger, animate, style, transition} from '@angular/animations';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-  animations: [
-    trigger('openClose', [
-      state('true', style({ display: 'block'})),
-      state('false', style({ display: 'none' })),
-      transition('false <=> true', [ animate(500) ]),
-    ])
-  ]
+
+})
+@Directive({
+  selector: '[clickOutside]'
 })
 export class HeaderComponent implements OnInit {
-  isOpen = false;
+  menuTopLeftPosition =  {visibility: 'hidden'};
+  @Output() clickChange: EventEmitter<number> = new EventEmitter();
 
-  openMobMenu() {
-    this.isOpen = !this.isOpen;
-  }
   constructor() { }
 
   ngOnInit(): void {
   }
-
+  openMobMenu() {
+    this.menuTopLeftPosition =  {visibility: 'visible'};
+  }
+  hideMenu(exists): any {
+    if (!exists) {
+      this.menuTopLeftPosition.visibility = 'hidden';
+    }
+  }
 
 }

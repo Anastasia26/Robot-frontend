@@ -12,7 +12,7 @@
           <div class="form__field" [ngClass]="{'has-error': form.get('email').invalid && form.get('email').touched}">
             <label><b>Your e-mail</b></label>
             <input type="text" formControlName="email" name="email">
-            <sup *ngIf="form.get('email').invalid && form.get('email').touched">
+            <sup class="error" *ngIf="form.get('email').invalid && form.get('email').touched">
               <span *ngIf="form.get('email')['errors']['required']">Email is required!</span>
               <span *ngIf="form.get('email')['errors']['email']">Please enter a valid email</span>
             </sup>
@@ -20,14 +20,14 @@
           <div class="form__field" [ngClass]="{'has-error': form.get('password').invalid && form.get('password').touched}">
             <label><b>Enter your password</b> <span>min. 6 characters</span></label>
             <input type="password" formControlName="password" name="password">
-            <sup *ngIf="form.get('password').invalid && form.get('password').touched">
+            <sup class="error" *ngIf="form.get('password').invalid && form.get('password').touched">
               <span *ngIf="form.get('password')['errors']['required']">Password is required!</span>
               <span *ngIf="form.get('password')['errors']['minlength'] && form.get('password')['errors']['minlength']['requiredLength']">
               The password must be more than {{form.get('password')['errors']['minlength']['requiredLength']}}
                 characters! Now {{form.get('password')['errors']['minlength']['actualLength']}}</span>
             </sup>
           </div>
-          <sup *ngIf="errorMessage">{{errorMessage.detail}}</sup>
+          <sup class="error" *ngIf="errorMessage">{{errorMessage.detail}}</sup>
           <div class="form__buttons">
             <div class="form__left">
               <button class="button button-load" type="submit" [disabled]="form.invalid || loading">Login

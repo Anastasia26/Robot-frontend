@@ -16,12 +16,12 @@
                      [ngClass]="{'has-error': formEmail.get('email').invalid && formEmail.get('email').touched}">
                     <p>E-mail <sup>*</sup></p>
                     <input formControlName="email" placeholder="example@200cai.com" type="email"/>
-                    <sup *ngIf="formEmail.get('email').invalid && formEmail.get('email').touched">
-                        <span *ngIf="formEmail.get('email')['errors']['required']">Email is required!</span>
-                        <span *ngIf="formEmail.get('email')['errors']['email']">Please enter a valid email</span>
+                    <sup class="error" *ngIf="formEmail.get('email').invalid && formEmail.get('email').touched">
+                        <span class="error" *ngIf="formEmail.get('email')['errors']['required']">Email is required!</span>
+                        <span class="error" *ngIf="formEmail.get('email')['errors']['email']">Please enter a valid email</span>
                     </sup>
-                    <sup *ngIf="errorMessage">
-                        <span *ngIf="errorMessage['email']">{{errorMessage['email']}}</span>
+                    <sup class="error" *ngIf="errorMessage">
+                        <span class="error" *ngIf="errorMessage['email']">{{errorMessage['email']}}</span>
                     </sup>
                 </div>
                 <div class="modal-alert__buttons">

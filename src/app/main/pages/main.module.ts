@@ -18,6 +18,8 @@ import { PricingComponent } from './pricing/pricing.component';
 import { ArticleComponent } from '../../shared/components/article/article.component';
 import {FooterComponent} from './footer/footer.component';
 import {HeaderComponent} from './header/header.component';
+import {AccordionModule} from "primeng/accordion";
+import {ButtonModule} from "primeng/button";
 
 
 
@@ -43,7 +45,9 @@ import {HeaderComponent} from './header/header.component';
     CoreModule,
     SharedModule,
     RouterModule,
-    MainRoutingModule
+    MainRoutingModule,
+    AccordionModule,
+    ButtonModule,
   ],
   providers: [],
   exports: [

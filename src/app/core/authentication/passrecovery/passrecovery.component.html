@@ -13,11 +13,11 @@
                     <div class="form__field" [ngClass]="{'has-error': form.get('email').invalid && form.get('email').touched}">
                         <label><b>Your e-mail</b></label>
                         <input type="text" placeholder="E-mail" formControlName="email" name="email">
-                        <sup *ngIf="form.get('email').invalid && form.get('email').touched">
-                            <span *ngIf="form.get('email')['errors']['required']">Email must not be empty!</span>
-                            <span *ngIf="form.get('email')['errors']['email']">Please enter a valid email</span>
+                        <sup class="error" *ngIf="form.get('email').invalid && form.get('email').touched">
+                            <span class="error" *ngIf="form.get('email')['errors']['required']">Email must not be empty!</span>
+                            <span class="error" *ngIf="form.get('email')['errors']['email']">Please enter a valid email</span>
                         </sup>
-                        <sup *ngIf="errorMessage">{{errorMessage}}</sup>
+                        <sup class="error" *ngIf="errorMessage">{{errorMessage}}</sup>
                     </div>
                     <div class="form__captcha">
                         <img src="../../../../assets/images/captcha.jpg" alt=""/>

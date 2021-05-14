@@ -4,7 +4,7 @@ import {environment} from '../../../environments/environment';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {ofType} from '@ngrx/effects';
-import {UserActionTypes} from '../store/actions/user.action';
+import {ChangeQuickStatus, UserActionTypes} from '../store/actions/user.action';
 
 
 @Injectable()
@@ -41,8 +41,33 @@ export class UserService {
         const url = environment.apiEndpoint + `/auth/users/me/`;
         return this.http.get<any>(url);
     }
+
+    changeUserInfo(user_data: object): Observable<any> {
+        const url = environment.apiEndpoint + `/auth/users/me/`;
+        return this.http.patch<any>(url, user_data);
+    }
+
     refreshToken(refresh: string): Observable<any> {
         const url = environment.apiEndpoint + `/auth/jwt/refresh/`;
         return this.http.post<any>(url, {refresh});
+    }
+
+    userPasswordReset(password_data: object): Observable<any> {
+        const url = environment.apiEndpoint + `/auth/users/set_password/`;
+        return this.http.post<any>(url, password_data);
+    }
+
+    userEmailReset(email_data: object): Observable<any> {
+        const url = environment.apiEndpoint + `/auth/users/set_email/`;
+        return this.http.post<any>(url, email_data);
+    }
+
+    changeQuickStatus(quick_stats: boolean): Observable<any> {
+        const url = environment.apiEndpoint + `/auth/users/me/`;
+        return this.http.patch<any>(url, {use_quick_stats: quick_stats});
+    }
+
+    deleteUser(id: number): Observable<any> {
+        return this.http.delete<any>(environment.apiEndpoint + `/auth/users/${id}/`);
     }
 }

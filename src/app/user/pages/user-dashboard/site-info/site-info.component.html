@@ -1,0 +1,224 @@
+<ng-container *ngFor="let address of domainDetails; index as i">
+    <div class="account__item site-info" [ngClass]="{'visibleSiteInfo': address.id}">
+        <p-toast></p-toast>
+        <label class="site-info__switch switch">
+            <input checked type="checkbox" (change)="changePerfomMonitoring(checkPerfomMonitoring)" [(ngModel)]="checkPerfomMonitoring">
+            <span class="switch__slider"></span>
+            <span class="switch__red">Off</span>
+            <span class="switch__green">On</span>
+        </label>
+        <h2>{{address.name}}</h2>
+        <div class="site-info__sub">
+            <div class="site-info__ips" *ngFor="let childIpAddr of address.ip_addresses;">
+                <p>{{childIpAddr.address}}</p>
+            </div>
+        </div>
+        <div class="site-info__content" *ngFor="let childIpAddr of address.ip_addresses; index as indxip">
+            <div class="site-info__spiner" *ngIf="address.perform_monitoring && childIpAddr.loader">
+                <app-spinner></app-spinner>
+            </div>
+            <div [ngClass]="{visibleContent: childIpAddr.loader}">
+            <div class="site-info__list">
+                <div class="site-info__item">
+                    <div class="site-info__main">
+                        <div class="site-info__gear">
+                            <img src="../../../../../assets/images/gear2.png"
+                                 (click)="openDomainSetting(indxip)" alt=""/>
+                        </div>
+                        <h3>{{childIpAddr.address}}</h3>
+                        <div class="site-info__graph">
+                            <ngx-charts-line-chart
+                                    [scheme]="{domain: ['#5AA454', '#E44D25', '#D9A900']}"
+                                    [showXAxisLabel]="true"
+                                    [showYAxisLabel]="true"
+                                    [xAxis]="true"
+                                    [yAxis]="true"
+                                    [yAxisLabel]="'ms'"
+                                    [results]="childIpAddr.isChartIpResults ? noChartData : childIpAddr.chartIpResults"
+                                    [curve]="curve"
+                                    [view]="[800, 400]"
+                                    [legend]="true"
+                                    [autoScale]="true"
+                            >
+                            </ngx-charts-line-chart>
+                        </div>
+                        <div class="site-info__result">
+                            <div class="site-info__digits">
+                                <div class="site-info__text">
+                                    <p><span>SSL Verify</span></p>
+                                    <ng-container *ngIf="childIpAddr.ssl?.length > 0; else emptySSlStatus">
+                                        <div *ngFor="let ssl_status of childIpAddr.ssl">
+                                            <div *ngIf="ssl_status.status; else noSSlStatus">
+                                                <div class="site-info__status result-green">Ok</div>
+                                            </div>
+                                            <ng-template #noSSlStatus>
+                                                <div class="site-info__status result-red">No</div>
+                                            </ng-template>
+                                        </div>
+                                    </ng-container>
+                                    <ng-template #emptySSlStatus>
+                                        <div class="site-info__status result-red">Error</div>
+                                    </ng-template>
+                                </div>
+                                <ng-container *ngIf="childIpAddr.ports">
+                                    <div class="site-info__ports">
+                                        <div *ngFor="let port of childIpAddr.ports">
+                                            <div [ngSwitch]="port.status">
+                                                <ng-template ngSwitchCase="open"><p class="result-green">{{port.number}}</p></ng-template>
+                                                <ng-template ngSwitchCase="filtered"><p class="result-yellow">{{port.number}}</p></ng-template>
+                                                <ng-template ngSwitchCase="closed"><p class="result-red">{{port.number}}</p></ng-template>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                        <div [@openClose]="activeState[indxip] ? true : false">
+                            <div style="display: block" class="site-info__expand">
+                                <div class="site-info__expand-top">
+                                    <div class="site-info__settings">
+                                        <h2>Settings</h2>
+                                    </div>
+                                    <div class="site-info__type">
+                                        <h2>Type scan: TCP</h2>
+                                    </div>
+                                </div>
+                                <div class="site-info__expand-content">
+                                    <div class="site-info__settings">
+                                        <div class="site-info__switches">
+                                            <ng-container *ngIf="childIpAddr.settings">
+                                                <div class="site-info__column">
+                                                    <div class="site-info__option">
+                                                        <p>Ping</p>
+                                                        <label class="switch">
+                                                            <input type="checkbox"
+                                                                   [(ngModel)]="childIpAddr.settings.ping">
+                                                            <span class="switch__slider"></span>
+                                                            <span class="switch__red">Off</span>
+                                                            <span class="switch__green">On</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="site-info__option">
+                                                        <p>Http</p>
+                                                        <label class="switch">
+                                                            <input type="checkbox"
+                                                                   [(ngModel)]="childIpAddr.settings.http">
+                                                            <span class="switch__slider"></span>
+                                                            <span class="switch__red">Off</span>
+                                                            <span class="switch__green">On</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="site-info__option">
+                                                        <p>Https</p>
+                                                        <label class="switch">
+                                                            <input type="checkbox"
+                                                                   [(ngModel)]="childIpAddr.settings.https">
+                                                            <span class="switch__slider"></span>
+                                                            <span class="switch__red">Off</span>
+                                                            <span class="switch__green">On</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="site-info__option">
+                                                        <p>SSL Verify</p>
+                                                        <label class="switch">
+                                                            <input type="checkbox"
+                                                                   [(ngModel)]="childIpAddr.settings.ssl">
+                                                            <span class="switch__slider"></span>
+                                                            <span class="switch__red">Off</span>
+                                                            <span class="switch__green">On</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                            <div class="site-info__column" *ngIf="childIpAddr.openedPorts">
+                                                <div class="site-info__option" *ngFor="let openedPort of childIpAddr.openedPorts">
+                                                    <p>{{openedPort.number}}</p>
+                                                    <label class="switch">
+                                                        <input type="checkbox" [(ngModel)]="openedPort.isActive">
+                                                        <span class="switch__slider"></span>
+                                                        <span class="switch__red">Off</span>
+                                                        <span class="switch__green">On</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="site-info__scan">
+                                            <div>
+                                                <button class="button fast-port-scan" [disabled]="childIpAddr.fast_status"
+                                                        (click)="FastPortScan(childIpAddr.id,'fast')">Fast Port Scan
+                                                    <div class="circle-loader" *ngIf="childIpAddr.fast_status">
+                                                        <app-spinner></app-spinner>
+                                                    </div>
+                                                </button>
+                                            </div>
+                                            <div>
+                                                <button class="button" [disabled]="childIpAddr.full_status"
+                                                        (click)="FullPortScan(childIpAddr.id,'full')">Full Port Scan
+                                                    <div class="circle-loader" *ngIf="childIpAddr.full_status">
+                                                        <app-spinner></app-spinner>
+                                                    </div>
+                                                </button>
+                                            </div>
+                                            <sup class="error" *ngIf="errorMessage">{{errorMessage}}</sup>
+                                        </div>
+                                    </div>
+                                    <ng-container *ngIf="childIpAddr.monitorScanInfo">
+                                        <div class="site-info__type">
+                                            <div class="site-info__table tcp-table">
+                                                <div class="tcp-table__top-row">
+                                                    <div class="tcp-table__port">
+                                                        <h3>Port</h3>
+                                                    </div>
+                                                    <div class=" tcp-table__information">
+                                                        <div class="tcp-table__available">
+                                                            <h3>Status</h3>
+                                                        </div>
+                                                        <div class="tcp-table__description">
+                                                            <h3>Description</h3>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tcp-table__rows">
+                                                    <div *ngFor="let scan of childIpAddr.monitorScanInfo">
+                                                        <div class="tcp-table__row">
+                                                            <div class="tcp-table__port">
+                                                                <p>{{scan.number}}</p>
+                                                            </div>
+                                                            <div class="tcp-table__information">
+                                                                <div class="tcp-table__available">
+                                                                    <p *ngIf="scan.status === 'filtered'"
+                                                                       class="filtered"><span>{{scan.status}}</span></p>
+                                                                    <p *ngIf="scan.status === 'open'" class="open">
+                                                                        <span>{{scan.status}}</span></p>
+                                                                    <p *ngIf="scan.status === 'closed'" class="closed">
+                                                                        <span>{{scan.status}}</span></p>
+                                                                </div>
+                                                                <div class="tcp-table__description">
+                                                                    <p *ngIf="scan.description">
+                                                                        <span>{{scan.description}}</span></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                                <div class="site-info__buttons">
+                                    <button class="button button-cancel site-info__close" (click)="openDomainSetting(indxip)">Close</button>
+                                    <button class="button"
+                                            (click)="resetDomainStats(childIpAddr)">
+                                        Apply
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</ng-container>

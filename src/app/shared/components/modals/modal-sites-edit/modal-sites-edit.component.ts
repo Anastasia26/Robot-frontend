@@ -8,7 +8,11 @@ import {Store} from '@ngrx/store';
 import {selectUserState, UserState} from '../../../../core/store/state/user.state';
 import {UserDashboardService} from '../../../../user/pages/services/user-dashboard.service';
 import {ClearAllFailureMessage} from '../../../../core/store/actions/user.action';
-import {ApplyEditedContactsList, UserInfoActionTypes} from '../../../../core/store/actions/user-info.action';
+import {
+  ApplyEditedContactsList,
+  GetAlertContacts,
+  UserInfoActionTypes
+} from '../../../../core/store/actions/user-info.action';
 @Component({
   selector: 'app-modal-sites-edit',
   templateUrl: './modal-sites-edit.component.html',
@@ -41,7 +45,6 @@ export class ModalSitesEditComponent implements OnInit, OnDestroy {
     this.getState = this.store.select(selectUserState);
     this.getState.subscribe((state) => {
       this.alertInfo = state.alertInfo;
-      console.log(this.alertInfo);
       this.errorMessage = state.errorMessage;
     });
     this.element = el.nativeElement;
@@ -87,7 +90,6 @@ export class ModalSitesEditComponent implements OnInit, OnDestroy {
           .subscribe(resp => {
             this.selectedAlertList = resp['alert_contacts'];
             this.selectedDomainName = resp['name'];
-            console.log(this.selectedAlertList);
           });
     }
     this.element.style.display = 'block';

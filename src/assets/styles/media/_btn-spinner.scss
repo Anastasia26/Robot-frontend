@@ -1,3 +1,6 @@
+button {
+  position: relative;
+}
 .button-load {
   width: 220px;
   position: relative;
@@ -14,10 +17,11 @@
   background: #8286bc;
   box-shadow: 0 2px 0 #404F9C, inset 0 2px 0 #96A6FF;
 }
+
 #floatingCirclesG{
   position:relative;
-  width:48px;
-  height:48px;
+  width:45px;
+  height:45px;
   margin:auto;
   transform:scale(0.6);
   -o-transform:scale(0.6);

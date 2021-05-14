@@ -4,7 +4,7 @@
   <div class="form__field">
     <label>Comment</label>
     <textarea formControlName="comment"></textarea>
-    <sup *ngIf="formComments.get('comment').invalid && formComments.get('comment').touched">
+    <sup class="error" *ngIf="formComments.get('comment').invalid && formComments.get('comment').touched">
       <span *ngIf="formComments.get('comment')['errors']['required']">The text is required!</span>
     </sup>
   </div>

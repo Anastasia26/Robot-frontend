@@ -24,8 +24,8 @@
                                 <p>{{alert_contact['email']}}</p>
                             </label>
                         </div>
-                        <sup *ngIf="errorMessage">
-                            <span *ngIf="errorMessage['domain']">{{errorMessage['domain']}}</span>
+                        <sup class="error" *ngIf="errorMessage">
+                            <span class="error" *ngIf="errorMessage['domain']">{{errorMessage['domain']}}</span>
                         </sup>
                     </div>
                     <div class="modal-sites__other">
